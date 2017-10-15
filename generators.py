@@ -144,7 +144,7 @@ g = Geffe(x,y,s)
 
 # Генератор должен возвращать байты
 # z = Z(1-альфа)
-def uniformity_check(generator,iterations,z):
+def equability_check(generator,iterations,z):
     values_frequency = dict()
     for _ in range(iterations):
         value = generator.get_octal_state()
@@ -166,17 +166,62 @@ def uniformity_check(generator,iterations,z):
     return criteria <= limit_criteria
 
 def independence_check(generator,iterations,z):
-    values_frequency = dict()
-    for _ in range(iterations,z):
+    values_frequency = [[0 for i in range(256)] for i in range(256)]
+    for _ in range(0,iterations,2):
+        if _ % 10000 == 0:
+            print(_)
         first_value = generator.get_octal_state()
         second_value = generator.get_octal_state()
-        pair = (first_value,second_value)
-        if values_frequency.get(pair):
-            values_frequency[pair] += 1
-        elif values_frequency.get((second_value,first_value)):
-            values_frequency[(second_value,first_value)] ++ 1
-        else:
-            values_frequency[pair] = 1
+        values_frequency[first_value][second_value] += 1
+
+    # Chi ** 2
+    criteria = 0
+    n = 0
+    for i in range(256):
+        for j in range(256):
+            pair_amount = values_frequency[i][j]
+            n += pair_amount
+            first_value_amount = sum([values_frequency[i][k] for k in range(256)])
+            second_value_amount = sum([values_frequency[k][j] for k in range(256)])
+
+            criteria += (pair_amount ** 2)/(first_value_amount * second_value_amount)
+    criteria = n* (criteria - 1)
+    l = 255 ** 2
+    limit_criteria = ((2*l)**(1/2)) * z + l
+    print('%s -- %s -- %s, Passing: %s' % (
+        generator.__class__.__name__, criteria, limit_criteria, criteria <= limit_criteria
+    ))
+    return criteria <= limit_criteria
+
+# r - число отрезков,на которые разбиваем
+def uniformity_check(generator,iterations,z,r = 20):
+    values_frequency = [[0 for i in range(256)] for j in range(r)]
+    cut_length = iterations // r
+    # По всем отрезкам
+    for j in range(r):
+        # Генерим значение на отрезке
+        for _ in range(cut_length):
+            value = generator.get_octal_state()
+            values_frequency[j][value] += 1
+
+    criteria = 0
+    for i in range(256):
+        for j in range(r):
+            byte_on_cut_amount = values_frequency[j][i]
+            byte_amount = sum([values_frequency[k][i] for k in range(r)])
+            # У нас длинна отрезков везде одинаковая, поэтому её не считаем
+
+            criteria += (byte_on_cut_amount ** 2) / (byte_amount * cut_length)
+    n = r * cut_length
+    criteria = n * (criteria - 1)
+
+    # Chi (1-alpha) ** 2
+    l = 255 * (r - 1)
+    limit_criteria = ((2*l)**(1/2)) * z + l
+    print('%s -- %s -- %s, Passing: %s' % (
+        generator.__class__.__name__, criteria, limit_criteria, criteria <= limit_criteria
+    ))
+    return criteria <= limit_criteria
 
 # Key is alpha - value is Z(1-alpha)
 Z = {
@@ -185,4 +230,4 @@ Z = {
     0.1: 1.28
 }
 
-uniformity_check(g,1000000,Z[0.05])
+uniformity_check(g,1000000,Z[0.05],20)
