@@ -707,37 +707,40 @@ struct __pyx_obj_18complex_generators_L89;
 struct __pyx_obj_18complex_generators_L9;
 struct __pyx_obj_18complex_generators_L10;
 struct __pyx_obj_18complex_generators_L11;
+struct __pyx_obj_18complex_generators_L20;
 struct __pyx_obj_18complex_generators_Geffe;
 
-/* "complex_generators.pyx":4
- * import numpy as np
+/* "complex_generators.pyx":5
  * 
+ * # Done
  * cdef class L89:             # <<<<<<<<<<<<<<
  *     cdef int[89] state
- *     def __init__(self,start_state = None):
+ *     cdef public str name
  */
 struct __pyx_obj_18complex_generators_L89 {
   PyObject_HEAD
   int state[89];
+  PyObject *name;
 };
 
 
-/* "complex_generators.pyx":22
- *         return self.state
+/* "complex_generators.pyx":35
  * 
+ * # Done
  * cdef class L9:             # <<<<<<<<<<<<<<
  *     cdef int[9] state
- *     def __init__(self,start_state = None):
+ *     cdef public str name
  */
 struct __pyx_obj_18complex_generators_L9 {
   PyObject_HEAD
   int state[9];
+  PyObject *name;
 };
 
 
-/* "complex_generators.pyx":39
- *         return self.state
+/* "complex_generators.pyx":63
  * 
+ * # Done
  * cdef class L10:             # <<<<<<<<<<<<<<
  *     cdef int[10] state
  *     def __init__(self,start_state = None):
@@ -748,12 +751,12 @@ struct __pyx_obj_18complex_generators_L10 {
 };
 
 
-/* "complex_generators.pyx":55
- *     def get_state(self):
- *         return self.state
+/* "complex_generators.pyx":87
+ * 
+ * # Done
  * cdef class L11:             # <<<<<<<<<<<<<<
  *     cdef int[11] state
- *     def __init__(self,start_state = None):
+ * 
  */
 struct __pyx_obj_18complex_generators_L11 {
   PyObject_HEAD
@@ -761,9 +764,22 @@ struct __pyx_obj_18complex_generators_L11 {
 };
 
 
-/* "complex_generators.pyx":72
- *         return self.state
+/* "complex_generators.pyx":112
  * 
+ * 
+ * cdef class L20:             # <<<<<<<<<<<<<<
+ *     cdef int[20] state
+ * 
+ */
+struct __pyx_obj_18complex_generators_L20 {
+  PyObject_HEAD
+  int state[20];
+};
+
+
+/* "complex_generators.pyx":139
+ * 
+ * # Done
  * cdef class Geffe:             # <<<<<<<<<<<<<<
  *     cdef L11 x
  *     cdef L9 y
@@ -1093,6 +1109,35 @@ static CYTHON_INLINE int __Pyx_ListComp_Append(PyObject* list, PyObject* x) {
 #define __Pyx_ListComp_Append(L,x) PyList_Append(L,x)
 #endif
 
+/* IterNext.proto */
+#define __Pyx_PyIter_Next(obj) __Pyx_PyIter_Next2(obj, NULL)
+static CYTHON_INLINE PyObject *__Pyx_PyIter_Next2(PyObject *, PyObject *);
+
+/* PyObjectCall.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
+#else
+#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
+#endif
+
+/* PyObjectSetAttrStr.proto */
+#if CYTHON_USE_TYPE_SLOTS
+#define __Pyx_PyObject_DelAttrStr(o,n) __Pyx_PyObject_SetAttrStr(o,n,NULL)
+static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr_name, PyObject* value) {
+    PyTypeObject* tp = Py_TYPE(obj);
+    if (likely(tp->tp_setattro))
+        return tp->tp_setattro(obj, attr_name, value);
+#if PY_MAJOR_VERSION < 3
+    if (likely(tp->tp_setattr))
+        return tp->tp_setattr(obj, PyString_AS_STRING(attr_name), value);
+#endif
+    return PyObject_SetAttr(obj, attr_name, value);
+}
+#else
+#define __Pyx_PyObject_DelAttrStr(o,n)   PyObject_DelAttr(o,n)
+#define __Pyx_PyObject_SetAttrStr(o,n,v) PyObject_SetAttr(o,n,v)
+#endif
+
 /* GetAttr.proto */
 static CYTHON_INLINE PyObject *__Pyx_GetAttr(PyObject *, PyObject *);
 
@@ -1101,13 +1146,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetAttr3(PyObject *, PyObject *, PyObject *
 
 /* GetModuleGlobalName.proto */
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
-
-/* PyObjectCall.proto */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg, PyObject *kw);
-#else
-#define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
-#endif
 
 /* PyIntBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -1119,10 +1157,6 @@ static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, long int
 
 /* ExtTypeTest.proto */
 static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
-
-/* IterNext.proto */
-#define __Pyx_PyIter_Next(obj) __Pyx_PyIter_Next2(obj, NULL)
-static CYTHON_INLINE PyObject *__Pyx_PyIter_Next2(PyObject *, PyObject *);
 
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
@@ -1377,11 +1411,13 @@ static PyTypeObject *__pyx_ptype_18complex_generators_L89 = 0;
 static PyTypeObject *__pyx_ptype_18complex_generators_L9 = 0;
 static PyTypeObject *__pyx_ptype_18complex_generators_L10 = 0;
 static PyTypeObject *__pyx_ptype_18complex_generators_L11 = 0;
+static PyTypeObject *__pyx_ptype_18complex_generators_L20 = 0;
 static PyTypeObject *__pyx_ptype_18complex_generators_Geffe = 0;
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(struct __pyx_obj_18complex_generators_L89 *, PyObject *); /*proto*/
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struct __pyx_obj_18complex_generators_L9 *, PyObject *); /*proto*/
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L10__set_state(struct __pyx_obj_18complex_generators_L10 *, PyObject *); /*proto*/
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L11__set_state(struct __pyx_obj_18complex_generators_L11 *, PyObject *); /*proto*/
+static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L20__set_state(struct __pyx_obj_18complex_generators_L20 *, PyObject *); /*proto*/
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_Geffe__set_state(struct __pyx_obj_18complex_generators_Geffe *, PyObject *); /*proto*/
 static CYTHON_INLINE PyObject *__Pyx_carray_to_py_int(int *, Py_ssize_t); /*proto*/
 static CYTHON_INLINE PyObject *__Pyx_carray_to_tuple_int(int *, Py_ssize_t); /*proto*/
@@ -1395,6 +1431,7 @@ static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_OverflowError;
 static PyObject *__pyx_builtin_enumerate;
 static PyObject *__pyx_builtin_IndexError;
+static const char __pyx_k_[] = "";
 static const char __pyx_k_s[] = "s";
 static const char __pyx_k_x[] = "x";
 static const char __pyx_k_y[] = "y";
@@ -1402,11 +1439,12 @@ static const char __pyx_k_np[] = "np";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_main[] = "__main__";
-static const char __pyx_k_name[] = "__name__";
+static const char __pyx_k_name[] = "name";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_import[] = "__import__";
+static const char __pyx_k_name_2[] = "__name__";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_update[] = "update";
@@ -1430,12 +1468,16 @@ static const char __pyx_k_pyx_unpickle_L9[] = "__pyx_unpickle_L9";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_pyx_unpickle_L10[] = "__pyx_unpickle_L10";
 static const char __pyx_k_pyx_unpickle_L11[] = "__pyx_unpickle_L11";
+static const char __pyx_k_pyx_unpickle_L20[] = "__pyx_unpickle_L20";
 static const char __pyx_k_pyx_unpickle_L89[] = "__pyx_unpickle_L89";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_complex_generators[] = "complex_generators";
 static const char __pyx_k_pyx_unpickle_Geffe[] = "__pyx_unpickle_Geffe";
+static const char __pyx_k_Incompatible_checksums_s_vs_0x0c[] = "Incompatible checksums (%s vs 0x0c72d22 = (name, state))";
 static const char __pyx_k_Incompatible_checksums_s_vs_0x9e[] = "Incompatible checksums (%s vs 0x9ed39e2 = (state))";
 static const char __pyx_k_Incompatible_checksums_s_vs_0xeb[] = "Incompatible checksums (%s vs 0xeb210bb = (s, x, y))";
+static PyObject *__pyx_kp_s_;
+static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0x0c;
 static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0x9e;
 static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0xeb;
 static PyObject *__pyx_n_s_IndexError;
@@ -1450,6 +1492,7 @@ static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_name;
+static PyObject *__pyx_n_s_name_2;
 static PyObject *__pyx_n_s_new;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
@@ -1462,6 +1505,7 @@ static PyObject *__pyx_n_s_pyx_type;
 static PyObject *__pyx_n_s_pyx_unpickle_Geffe;
 static PyObject *__pyx_n_s_pyx_unpickle_L10;
 static PyObject *__pyx_n_s_pyx_unpickle_L11;
+static PyObject *__pyx_n_s_pyx_unpickle_L20;
 static PyObject *__pyx_n_s_pyx_unpickle_L89;
 static PyObject *__pyx_n_s_pyx_unpickle_L9;
 static PyObject *__pyx_n_s_range;
@@ -1480,54 +1524,79 @@ static PyObject *__pyx_n_s_y;
 static int __pyx_pf_18complex_generators_3L89___init__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v_start_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L89_2__next__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L89_4get_state(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L89_8__setstate_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L89_6get_octal_state(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L89_8name(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L89_4name___get__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
+static int __pyx_pf_18complex_generators_3L89_4name_2__set__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static int __pyx_pf_18complex_generators_3L89_4name_4__del__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L89_10__reduce_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L89_12__setstate_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_18complex_generators_2L9___init__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v_start_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_18complex_generators_2L9_4get_state(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_2L9_8__setstate_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_2L9_6get_octal_state(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_2L9_8name(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_2L9_4name___get__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
+static int __pyx_pf_18complex_generators_2L9_4name_2__set__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static int __pyx_pf_18complex_generators_2L9_4name_4__del__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_2L9_10__reduce_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_2L9_12__setstate_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_18complex_generators_3L10___init__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self, PyObject *__pyx_v_start_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L10_4get_state(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L10_6__reduce_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L10_8__setstate_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L10_6get_octal_state(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L10_8__reduce_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L10_10__setstate_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_18complex_generators_3L11___init__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self, PyObject *__pyx_v_start_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_18complex_generators_3L11_4get_state(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L11_6__reduce_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_3L11_8__setstate_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L11_6get_octal_state(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L11_8__reduce_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L11_10__setstate_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_18complex_generators_3L20___init__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self, PyObject *__pyx_v_start_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L20_2__next__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L20_4get_state(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L20_6get_octal_state(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L20_8__reduce_cython__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_3L20_10__setstate_cython__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y, PyObject *__pyx_v_s); /* proto */
 static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_5Geffe_4__reduce_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_18complex_generators_5Geffe_6__setstate_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_5Geffe_4get_octal_state(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_5Geffe_6__reduce_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_18complex_generators_5Geffe_8__setstate_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_4__pyx_unpickle_L10(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_18complex_generators_6__pyx_unpickle_L11(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_18complex_generators_8__pyx_unpickle_Geffe(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_8__pyx_unpickle_L20(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_18complex_generators_10__pyx_unpickle_Geffe(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_18complex_generators_L89(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_18complex_generators_L9(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_18complex_generators_L10(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_18complex_generators_L11(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_18complex_generators_L20(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_18complex_generators_Geffe(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_1;
+static PyObject *__pyx_int_2;
+static PyObject *__pyx_int_13053218;
 static PyObject *__pyx_int_166541794;
 static PyObject *__pyx_int_246550715;
-static PyObject *__pyx_codeobj_;
-static PyObject *__pyx_tuple__6;
-static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
+static PyObject *__pyx_tuple__11;
+static PyObject *__pyx_tuple__12;
+static PyObject *__pyx_tuple__13;
 static PyObject *__pyx_codeobj__2;
 static PyObject *__pyx_codeobj__3;
 static PyObject *__pyx_codeobj__4;
 static PyObject *__pyx_codeobj__5;
+static PyObject *__pyx_codeobj__6;
+static PyObject *__pyx_codeobj__7;
 
-/* "complex_generators.pyx":6
- * cdef class L89:
+/* "complex_generators.pyx":8
  *     cdef int[89] state
+ *     cdef public str name
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 89:
  *             self.state = start_state
@@ -1562,7 +1631,7 @@ static int __pyx_pw_18complex_generators_3L89_1__init__(PyObject *__pyx_v_self, 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 6, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1576,7 +1645,7 @@ static int __pyx_pw_18complex_generators_3L89_1__init__(PyObject *__pyx_v_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 6, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("complex_generators.L89.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1601,41 +1670,41 @@ static int __pyx_pf_18complex_generators_3L89___init__(struct __pyx_obj_18comple
   int __pyx_t_5[89];
   long __pyx_t_6;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceCall("__init__", __pyx_f[0], 6, 0, __PYX_ERR(0, 6, __pyx_L1_error));
+  __Pyx_TraceCall("__init__", __pyx_f[0], 8, 0, __PYX_ERR(0, 8, __pyx_L1_error));
 
-  /* "complex_generators.pyx":7
- *     cdef int[89] state
+  /* "complex_generators.pyx":9
+ *     cdef public str name
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 89:             # <<<<<<<<<<<<<<
  *             self.state = start_state
  *         else:
  */
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 9, __pyx_L1_error)
   __pyx_t_3 = ((__pyx_t_4 == 89) != 0);
   __pyx_t_1 = __pyx_t_3;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "complex_generators.pyx":8
+    /* "complex_generators.pyx":10
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 89:
  *             self.state = start_state             # <<<<<<<<<<<<<<
  *         else:
  *             self.state = [1 for i in range(89)]
  */
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 89) < 0)) __PYX_ERR(0, 8, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 89) < 0)) __PYX_ERR(0, 10, __pyx_L1_error)
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (89));
 
-    /* "complex_generators.pyx":7
- *     cdef int[89] state
+    /* "complex_generators.pyx":9
+ *     cdef public str name
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 89:             # <<<<<<<<<<<<<<
  *             self.state = start_state
@@ -1644,7 +1713,7 @@ static int __pyx_pf_18complex_generators_3L89___init__(struct __pyx_obj_18comple
     goto __pyx_L3;
   }
 
-  /* "complex_generators.pyx":10
+  /* "complex_generators.pyx":12
  *             self.state = start_state
  *         else:
  *             self.state = [1 for i in range(89)]             # <<<<<<<<<<<<<<
@@ -1652,21 +1721,21 @@ static int __pyx_pf_18complex_generators_3L89___init__(struct __pyx_obj_18comple
  *         cdef int new_element
  */
   /*else*/ {
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     for (__pyx_t_6 = 0; __pyx_t_6 < 89; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 10, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 12, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 89) < 0)) __PYX_ERR(0, 10, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 89) < 0)) __PYX_ERR(0, 12, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (89));
   }
   __pyx_L3:;
 
-  /* "complex_generators.pyx":6
- * cdef class L89:
+  /* "complex_generators.pyx":8
  *     cdef int[89] state
+ *     cdef public str name
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 89:
  *             self.state = start_state
@@ -1685,7 +1754,7 @@ static int __pyx_pf_18complex_generators_3L89___init__(struct __pyx_obj_18comple
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":11
+/* "complex_generators.pyx":13
  *         else:
  *             self.state = [1 for i in range(89)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -1716,9 +1785,9 @@ static PyObject *__pyx_pf_18complex_generators_3L89_2__next__(struct __pyx_obj_1
   Py_ssize_t __pyx_t_2;
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("__next__", 0);
-  __Pyx_TraceCall("__next__", __pyx_f[0], 11, 0, __PYX_ERR(0, 11, __pyx_L1_error));
+  __Pyx_TraceCall("__next__", __pyx_f[0], 13, 0, __PYX_ERR(0, 13, __pyx_L1_error));
 
-  /* "complex_generators.pyx":13
+  /* "complex_generators.pyx":15
  *     def __next__(self):
  *         cdef int new_element
  *         new_element = self.state[0] ^ self.state[51]             # <<<<<<<<<<<<<<
@@ -1727,21 +1796,21 @@ static PyObject *__pyx_pf_18complex_generators_3L89_2__next__(struct __pyx_obj_1
  */
   __pyx_v_new_element = ((__pyx_v_self->state[0]) ^ (__pyx_v_self->state[51]));
 
-  /* "complex_generators.pyx":15
+  /* "complex_generators.pyx":17
  *         new_element = self.state[0] ^ self.state[51]
  *         cdef int i
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "complex_generators.pyx":16
+    /* "complex_generators.pyx":18
  *         cdef int i
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]             # <<<<<<<<<<<<<<
@@ -1751,34 +1820,34 @@ static PyObject *__pyx_pf_18complex_generators_3L89_2__next__(struct __pyx_obj_1
     (__pyx_v_self->state[(__pyx_v_i - 1)]) = (__pyx_v_self->state[__pyx_v_i]);
   }
 
-  /* "complex_generators.pyx":17
+  /* "complex_generators.pyx":19
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element             # <<<<<<<<<<<<<<
  *         return new_element
- *     def get_state(self):
+ * 
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   (__pyx_v_self->state[(__pyx_t_2 - 1)]) = __pyx_v_new_element;
 
-  /* "complex_generators.pyx":18
+  /* "complex_generators.pyx":20
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element             # <<<<<<<<<<<<<<
+ * 
  *     def get_state(self):
- *         return self.state
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":11
+  /* "complex_generators.pyx":13
  *         else:
  *             self.state = [1 for i in range(89)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -1798,9 +1867,9 @@ static PyObject *__pyx_pf_18complex_generators_3L89_2__next__(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":19
- *         self.state[len(self.state) - 1] = new_element
+/* "complex_generators.pyx":22
  *         return new_element
+ * 
  *     def get_state(self):             # <<<<<<<<<<<<<<
  *         return self.state
  * 
@@ -1825,25 +1894,25 @@ static PyObject *__pyx_pf_18complex_generators_3L89_4get_state(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_state", 0);
-  __Pyx_TraceCall("get_state", __pyx_f[0], 19, 0, __PYX_ERR(0, 19, __pyx_L1_error));
+  __Pyx_TraceCall("get_state", __pyx_f[0], 22, 0, __PYX_ERR(0, 22, __pyx_L1_error));
 
-  /* "complex_generators.pyx":20
- *         return new_element
+  /* "complex_generators.pyx":23
+ * 
  *     def get_state(self):
  *         return self.state             # <<<<<<<<<<<<<<
  * 
- * cdef class L9:
+ *     def get_octal_state(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":19
- *         self.state[len(self.state) - 1] = new_element
+  /* "complex_generators.pyx":22
  *         return new_element
+ * 
  *     def get_state(self):             # <<<<<<<<<<<<<<
  *         return self.state
  * 
@@ -1861,26 +1930,324 @@ static PyObject *__pyx_pf_18complex_generators_3L89_4get_state(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef bint use_setstate
- *     state = (self.state,)
+/* "complex_generators.pyx":25
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L89_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L89_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_18complex_generators_3L89_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L89_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L89_6__reduce_cython__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_6get_octal_state(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
+static PyObject *__pyx_pf_18complex_generators_3L89_6get_octal_state(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 25, 0, __PYX_ERR(0, 25, __pyx_L1_error));
+
+  /* "complex_generators.pyx":26
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":27
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":28
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":29
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ *     def name(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":25
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L89.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":31
+ *         return int(result, 2)
+ * 
+ *     def name(self):             # <<<<<<<<<<<<<<
+ *         return self.name
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L89_9name(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L89_9name(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("name (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_8name(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L89_8name(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("name", 0);
+  __Pyx_TraceCall("name", __pyx_f[0], 31, 0, __PYX_ERR(0, 31, __pyx_L1_error));
+
+  /* "complex_generators.pyx":32
+ * 
+ *     def name(self):
+ *         return self.name             # <<<<<<<<<<<<<<
+ * 
+ * # Done
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":31
+ *         return int(result, 2)
+ * 
+ *     def name(self):             # <<<<<<<<<<<<<<
+ *         return self.name
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L89.name", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":7
+ * cdef class L89:
+ *     cdef int[89] state
+ *     cdef public str name             # <<<<<<<<<<<<<<
+ *     def __init__(self,start_state = None):
+ *         if type(start_state) == list and len(start_state) == 89:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L89_4name_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L89_4name_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_4name___get__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L89_4name___get__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_TraceCall("__get__", __pyx_f[0], 7, 0, __PYX_ERR(0, 7, __pyx_L1_error));
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L89.name.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_18complex_generators_3L89_4name_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_18complex_generators_3L89_4name_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_4name_2__set__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_18complex_generators_3L89_4name_2__set__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__", 0);
+  __Pyx_TraceCall("__set__", __pyx_f[0], 7, 0, __PYX_ERR(0, 7, __pyx_L1_error));
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name, __pyx_v_value) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("complex_generators.L89.name.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_18complex_generators_3L89_4name_5__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pw_18complex_generators_3L89_4name_5__del__(PyObject *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_4name_4__del__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_18complex_generators_3L89_4name_4__del__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__", 0);
+  __Pyx_TraceCall("__del__", __pyx_f[0], 7, 0, __PYX_ERR(0, 7, __pyx_L1_error));
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name, Py_None) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("complex_generators.L89.name.__del__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef bint use_setstate
+ *     state = (self.name, self.state)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L89_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L89_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L89_10__reduce_cython__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L89_10__reduce_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self) {
   int __pyx_v_use_setstate;
   PyObject *__pyx_v_state = NULL;
   PyObject *__pyx_v__dict = NULL;
@@ -1889,51 +2256,56 @@ static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  int __pyx_t_3;
+  PyObject *__pyx_t_3 = NULL;
   int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_5;
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
   __Pyx_TraceCall("__reduce_cython__", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
  *     cdef bint use_setstate
- *     state = (self.state,)             # <<<<<<<<<<<<<<
+ *     state = (self.name, self.state)             # <<<<<<<<<<<<<<
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_carray_to_py_int(__pyx_v_self->state, 89); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
   __pyx_t_1 = 0;
-  __pyx_v_state = __pyx_t_2;
   __pyx_t_2 = 0;
+  __pyx_v_state = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
 
   /* "(tree fragment)":4
  *     cdef bint use_setstate
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)             # <<<<<<<<<<<<<<
  *     if _dict is not None:
  *         state += (_dict,)
  */
-  __pyx_t_2 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_v__dict = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_v__dict = __pyx_t_3;
+  __pyx_t_3 = 0;
 
   /* "(tree fragment)":5
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
  *         use_setstate = True
  */
-  __pyx_t_3 = (__pyx_v__dict != Py_None);
-  __pyx_t_4 = (__pyx_t_3 != 0);
-  if (__pyx_t_4) {
+  __pyx_t_4 = (__pyx_v__dict != Py_None);
+  __pyx_t_5 = (__pyx_t_4 != 0);
+  if (__pyx_t_5) {
 
     /* "(tree fragment)":6
  *     _dict = getattr(self, '__dict__', None)
@@ -1942,28 +2314,28 @@ static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __
  *         use_setstate = True
  *     else:
  */
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_v__dict);
     __Pyx_GIVEREF(__pyx_v__dict);
-    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v__dict);
-    __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF_SET(__pyx_v_state, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v__dict);
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF_SET(__pyx_v_state, ((PyObject*)__pyx_t_2));
+    __pyx_t_2 = 0;
 
     /* "(tree fragment)":7
  *     if _dict is not None:
  *         state += (_dict,)
  *         use_setstate = True             # <<<<<<<<<<<<<<
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  */
     __pyx_v_use_setstate = 1;
 
     /* "(tree fragment)":5
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
@@ -1975,116 +2347,120 @@ static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __
   /* "(tree fragment)":9
  *         use_setstate = True
  *     else:
- *         use_setstate = False             # <<<<<<<<<<<<<<
+ *         use_setstate = self.name is not None             # <<<<<<<<<<<<<<
  *     if use_setstate:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, None), state
  */
   /*else*/ {
-    __pyx_v_use_setstate = 0;
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_5 = (__pyx_t_2 != Py_None);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_v_use_setstate = __pyx_t_5;
   }
   __pyx_L3:;
 
   /* "(tree fragment)":10
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, None), state
  *     else:
  */
-  __pyx_t_4 = (__pyx_v_use_setstate != 0);
-  if (__pyx_t_4) {
+  __pyx_t_5 = (__pyx_v_use_setstate != 0);
+  if (__pyx_t_5) {
 
     /* "(tree fragment)":11
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, None), state             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, None), state             # <<<<<<<<<<<<<<
  *     else:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, state)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L89); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 11, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L89); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 11, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_166541794);
-    __Pyx_GIVEREF(__pyx_int_166541794);
-    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_13053218);
+    __Pyx_GIVEREF(__pyx_int_13053218);
+    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_13053218);
     __Pyx_INCREF(Py_None);
     __Pyx_GIVEREF(Py_None);
-    PyTuple_SET_ITEM(__pyx_t_2, 2, Py_None);
-    __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 11, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_3, 2, Py_None);
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_3);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_v_state);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_v_state);
     __pyx_t_2 = 0;
-    __pyx_r = __pyx_t_5;
-    __pyx_t_5 = 0;
+    __pyx_t_3 = 0;
+    __pyx_r = __pyx_t_1;
+    __pyx_t_1 = 0;
     goto __pyx_L0;
 
     /* "(tree fragment)":10
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, None), state
  *     else:
  */
   }
 
   /* "(tree fragment)":13
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, None), state
  *     else:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, state)             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, state)             # <<<<<<<<<<<<<<
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_L89__set_state(self, __pyx_state)
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L89); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L89); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_166541794);
-    __Pyx_GIVEREF(__pyx_int_166541794);
-    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_13053218);
+    __Pyx_GIVEREF(__pyx_int_13053218);
+    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_13053218);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_state);
-    __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_2);
-    __pyx_t_5 = 0;
-    __pyx_t_2 = 0;
-    __pyx_r = __pyx_t_1;
+    PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_v_state);
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
     __pyx_t_1 = 0;
+    __pyx_t_3 = 0;
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
     goto __pyx_L0;
   }
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef bint use_setstate
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_AddTraceback("complex_generators.L89.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -2098,25 +2474,25 @@ static PyObject *__pyx_pf_18complex_generators_3L89_6__reduce_cython__(struct __
 
 /* "(tree fragment)":14
  *     else:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_L89__set_state(self, __pyx_state)
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L89_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L89_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_18complex_generators_3L89_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L89_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L89_8__setstate_cython__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_18complex_generators_3L89_12__setstate_cython__(((struct __pyx_obj_18complex_generators_L89 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L89_8__setstate_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_3L89_12__setstate_cython__(struct __pyx_obj_18complex_generators_L89 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -2125,7 +2501,7 @@ static PyObject *__pyx_pf_18complex_generators_3L89_8__setstate_cython__(struct 
   __Pyx_TraceCall("__setstate_cython__", __pyx_f[1], 14, 0, __PYX_ERR(1, 14, __pyx_L1_error));
 
   /* "(tree fragment)":15
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_L89__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
@@ -2136,7 +2512,7 @@ static PyObject *__pyx_pf_18complex_generators_3L89_8__setstate_cython__(struct 
 
   /* "(tree fragment)":14
  *     else:
- *         return __pyx_unpickle_L89, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L89, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_L89__set_state(self, __pyx_state)
  */
@@ -2155,9 +2531,9 @@ static PyObject *__pyx_pf_18complex_generators_3L89_8__setstate_cython__(struct 
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":24
- * cdef class L9:
+/* "complex_generators.pyx":38
  *     cdef int[9] state
+ *     cdef public str name
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 9:
  *             self.state = start_state
@@ -2192,7 +2568,7 @@ static int __pyx_pw_18complex_generators_2L9_1__init__(PyObject *__pyx_v_self, P
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 24, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2206,7 +2582,7 @@ static int __pyx_pw_18complex_generators_2L9_1__init__(PyObject *__pyx_v_self, P
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 24, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("complex_generators.L9.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2231,41 +2607,41 @@ static int __pyx_pf_18complex_generators_2L9___init__(struct __pyx_obj_18complex
   int __pyx_t_5[9];
   long __pyx_t_6;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceCall("__init__", __pyx_f[0], 24, 0, __PYX_ERR(0, 24, __pyx_L1_error));
+  __Pyx_TraceCall("__init__", __pyx_f[0], 38, 0, __PYX_ERR(0, 38, __pyx_L1_error));
 
-  /* "complex_generators.pyx":25
- *     cdef int[9] state
+  /* "complex_generators.pyx":39
+ *     cdef public str name
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 9:             # <<<<<<<<<<<<<<
  *             self.state = start_state
  *         else:
  */
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __pyx_t_3 = ((__pyx_t_4 == 9) != 0);
   __pyx_t_1 = __pyx_t_3;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "complex_generators.pyx":26
+    /* "complex_generators.pyx":40
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 9:
  *             self.state = start_state             # <<<<<<<<<<<<<<
  *         else:
  *             self.state = [1 for i in range(9)]
  */
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 9) < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 9) < 0)) __PYX_ERR(0, 40, __pyx_L1_error)
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (9));
 
-    /* "complex_generators.pyx":25
- *     cdef int[9] state
+    /* "complex_generators.pyx":39
+ *     cdef public str name
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 9:             # <<<<<<<<<<<<<<
  *             self.state = start_state
@@ -2274,7 +2650,7 @@ static int __pyx_pf_18complex_generators_2L9___init__(struct __pyx_obj_18complex
     goto __pyx_L3;
   }
 
-  /* "complex_generators.pyx":28
+  /* "complex_generators.pyx":42
  *             self.state = start_state
  *         else:
  *             self.state = [1 for i in range(9)]             # <<<<<<<<<<<<<<
@@ -2282,21 +2658,21 @@ static int __pyx_pf_18complex_generators_2L9___init__(struct __pyx_obj_18complex
  *         cdef int new_element
  */
   /*else*/ {
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     for (__pyx_t_6 = 0; __pyx_t_6 < 9; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 28, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 42, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 9) < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 9) < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (9));
   }
   __pyx_L3:;
 
-  /* "complex_generators.pyx":24
- * cdef class L9:
+  /* "complex_generators.pyx":38
  *     cdef int[9] state
+ *     cdef public str name
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 9:
  *             self.state = start_state
@@ -2315,7 +2691,7 @@ static int __pyx_pf_18complex_generators_2L9___init__(struct __pyx_obj_18complex
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":29
+/* "complex_generators.pyx":43
  *         else:
  *             self.state = [1 for i in range(9)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -2349,9 +2725,9 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
   Py_ssize_t __pyx_t_5;
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("__next__", 0);
-  __Pyx_TraceCall("__next__", __pyx_f[0], 29, 0, __PYX_ERR(0, 29, __pyx_L1_error));
+  __Pyx_TraceCall("__next__", __pyx_f[0], 43, 0, __PYX_ERR(0, 43, __pyx_L1_error));
 
-  /* "complex_generators.pyx":31
+  /* "complex_generators.pyx":45
  *     def __next__(self):
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[1]^self.state[3]^self.state[4]             # <<<<<<<<<<<<<<
@@ -2360,20 +2736,20 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
  */
   __pyx_v_new_element = ((((__pyx_v_self->state[0]) ^ (__pyx_v_self->state[1])) ^ (__pyx_v_self->state[3])) ^ (__pyx_v_self->state[4]));
 
-  /* "complex_generators.pyx":32
+  /* "complex_generators.pyx":46
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[1]^self.state[3]^self.state[4]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_int_1);
   __Pyx_GIVEREF(__pyx_int_1);
@@ -2381,16 +2757,16 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_2 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -2398,17 +2774,17 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 32, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 32, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -2418,7 +2794,7 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 32, __pyx_L1_error)
+          else __PYX_ERR(0, 46, __pyx_L1_error)
         }
         break;
       }
@@ -2427,21 +2803,21 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "complex_generators.pyx":33
+    /* "complex_generators.pyx":47
  *         new_element = self.state[0]^self.state[1]^self.state[3]^self.state[4]
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]             # <<<<<<<<<<<<<<
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  */
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     (__pyx_v_self->state[__pyx_t_6]) = (__pyx_v_self->state[__pyx_t_5]);
 
-    /* "complex_generators.pyx":32
+    /* "complex_generators.pyx":46
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[1]^self.state[3]^self.state[4]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
@@ -2451,20 +2827,20 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "complex_generators.pyx":34
+  /* "complex_generators.pyx":48
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element             # <<<<<<<<<<<<<<
  *         return new_element
  *     def get_state(self):
  */
-  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   (__pyx_v_self->state[(__pyx_t_2 - 1)]) = __pyx_v_new_element;
 
-  /* "complex_generators.pyx":35
+  /* "complex_generators.pyx":49
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element             # <<<<<<<<<<<<<<
@@ -2472,13 +2848,13 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
  *         return self.state
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":29
+  /* "complex_generators.pyx":43
  *         else:
  *             self.state = [1 for i in range(9)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -2500,7 +2876,7 @@ static PyObject *__pyx_pf_18complex_generators_2L9_2__next__(struct __pyx_obj_18
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":36
+/* "complex_generators.pyx":50
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
@@ -2527,23 +2903,23 @@ static PyObject *__pyx_pf_18complex_generators_2L9_4get_state(struct __pyx_obj_1
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_state", 0);
-  __Pyx_TraceCall("get_state", __pyx_f[0], 36, 0, __PYX_ERR(0, 36, __pyx_L1_error));
+  __Pyx_TraceCall("get_state", __pyx_f[0], 50, 0, __PYX_ERR(0, 50, __pyx_L1_error));
 
-  /* "complex_generators.pyx":37
+  /* "complex_generators.pyx":51
  *         return new_element
  *     def get_state(self):
  *         return self.state             # <<<<<<<<<<<<<<
  * 
- * cdef class L10:
+ *     def get_octal_state(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":36
+  /* "complex_generators.pyx":50
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
@@ -2563,26 +2939,324 @@ static PyObject *__pyx_pf_18complex_generators_2L9_4get_state(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "(tree fragment)":1
- * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
- *     cdef bint use_setstate
- *     state = (self.state,)
+/* "complex_generators.pyx":53
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_2L9_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_2L9_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_18complex_generators_2L9_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_2L9_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_2L9_6__reduce_cython__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_6get_octal_state(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
+static PyObject *__pyx_pf_18complex_generators_2L9_6get_octal_state(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 53, 0, __PYX_ERR(0, 53, __pyx_L1_error));
+
+  /* "complex_generators.pyx":54
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":55
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":56
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":57
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ *     def name(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":53
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L9.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":59
+ *         return int(result, 2)
+ * 
+ *     def name(self):             # <<<<<<<<<<<<<<
+ *         return self.name
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_2L9_9name(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_2L9_9name(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("name (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_8name(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_2L9_8name(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("name", 0);
+  __Pyx_TraceCall("name", __pyx_f[0], 59, 0, __PYX_ERR(0, 59, __pyx_L1_error));
+
+  /* "complex_generators.pyx":60
+ * 
+ *     def name(self):
+ *         return self.name             # <<<<<<<<<<<<<<
+ * 
+ * # Done
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":59
+ *         return int(result, 2)
+ * 
+ *     def name(self):             # <<<<<<<<<<<<<<
+ *         return self.name
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L9.name", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":37
+ * cdef class L9:
+ *     cdef int[9] state
+ *     cdef public str name             # <<<<<<<<<<<<<<
+ *     def __init__(self,start_state = None):
+ *         if type(start_state) == list and len(start_state) == 9:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_2L9_4name_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_2L9_4name_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_4name___get__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_2L9_4name___get__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_TraceCall("__get__", __pyx_f[0], 37, 0, __PYX_ERR(0, 37, __pyx_L1_error));
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L9.name.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_18complex_generators_2L9_4name_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_18complex_generators_2L9_4name_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_4name_2__set__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_18complex_generators_2L9_4name_2__set__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__", 0);
+  __Pyx_TraceCall("__set__", __pyx_f[0], 37, 0, __PYX_ERR(0, 37, __pyx_L1_error));
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name, __pyx_v_value) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("complex_generators.L9.name.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_18complex_generators_2L9_4name_5__del__(PyObject *__pyx_v_self); /*proto*/
+static int __pyx_pw_18complex_generators_2L9_4name_5__del__(PyObject *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_4name_4__del__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_18complex_generators_2L9_4name_4__del__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
+  int __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__del__", 0);
+  __Pyx_TraceCall("__del__", __pyx_f[0], 37, 0, __PYX_ERR(0, 37, __pyx_L1_error));
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name, Py_None) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("complex_generators.L9.name.__del__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef bint use_setstate
+ *     state = (self.name, self.state)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_2L9_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_2L9_11__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_2L9_10__reduce_cython__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_2L9_10__reduce_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self) {
   int __pyx_v_use_setstate;
   PyObject *__pyx_v_state = NULL;
   PyObject *__pyx_v__dict = NULL;
@@ -2591,51 +3265,56 @@ static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __p
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  int __pyx_t_3;
+  PyObject *__pyx_t_3 = NULL;
   int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_5;
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
   __Pyx_TraceCall("__reduce_cython__", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
  *     cdef bint use_setstate
- *     state = (self.state,)             # <<<<<<<<<<<<<<
+ *     state = (self.name, self.state)             # <<<<<<<<<<<<<<
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_carray_to_py_int(__pyx_v_self->state, 9); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
   __pyx_t_1 = 0;
-  __pyx_v_state = __pyx_t_2;
   __pyx_t_2 = 0;
+  __pyx_v_state = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
 
   /* "(tree fragment)":4
  *     cdef bint use_setstate
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)             # <<<<<<<<<<<<<<
  *     if _dict is not None:
  *         state += (_dict,)
  */
-  __pyx_t_2 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_v__dict = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_v__dict = __pyx_t_3;
+  __pyx_t_3 = 0;
 
   /* "(tree fragment)":5
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
  *         use_setstate = True
  */
-  __pyx_t_3 = (__pyx_v__dict != Py_None);
-  __pyx_t_4 = (__pyx_t_3 != 0);
-  if (__pyx_t_4) {
+  __pyx_t_4 = (__pyx_v__dict != Py_None);
+  __pyx_t_5 = (__pyx_t_4 != 0);
+  if (__pyx_t_5) {
 
     /* "(tree fragment)":6
  *     _dict = getattr(self, '__dict__', None)
@@ -2644,28 +3323,28 @@ static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __p
  *         use_setstate = True
  *     else:
  */
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_v__dict);
     __Pyx_GIVEREF(__pyx_v__dict);
-    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v__dict);
-    __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_DECREF_SET(__pyx_v_state, __pyx_t_1);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v__dict);
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF_SET(__pyx_v_state, ((PyObject*)__pyx_t_2));
+    __pyx_t_2 = 0;
 
     /* "(tree fragment)":7
  *     if _dict is not None:
  *         state += (_dict,)
  *         use_setstate = True             # <<<<<<<<<<<<<<
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  */
     __pyx_v_use_setstate = 1;
 
     /* "(tree fragment)":5
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
@@ -2677,116 +3356,120 @@ static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __p
   /* "(tree fragment)":9
  *         use_setstate = True
  *     else:
- *         use_setstate = False             # <<<<<<<<<<<<<<
+ *         use_setstate = self.name is not None             # <<<<<<<<<<<<<<
  *     if use_setstate:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, None), state
  */
   /*else*/ {
-    __pyx_v_use_setstate = 0;
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_5 = (__pyx_t_2 != Py_None);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_v_use_setstate = __pyx_t_5;
   }
   __pyx_L3:;
 
   /* "(tree fragment)":10
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, None), state
  *     else:
  */
-  __pyx_t_4 = (__pyx_v_use_setstate != 0);
-  if (__pyx_t_4) {
+  __pyx_t_5 = (__pyx_v_use_setstate != 0);
+  if (__pyx_t_5) {
 
     /* "(tree fragment)":11
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, None), state             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, None), state             # <<<<<<<<<<<<<<
  *     else:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, state)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L9); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 11, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L9); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 11, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_166541794);
-    __Pyx_GIVEREF(__pyx_int_166541794);
-    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_13053218);
+    __Pyx_GIVEREF(__pyx_int_13053218);
+    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_13053218);
     __Pyx_INCREF(Py_None);
     __Pyx_GIVEREF(Py_None);
-    PyTuple_SET_ITEM(__pyx_t_2, 2, Py_None);
-    __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 11, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_1);
-    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_3, 2, Py_None);
+    __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_3);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_v_state);
-    __pyx_t_1 = 0;
+    PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_v_state);
     __pyx_t_2 = 0;
-    __pyx_r = __pyx_t_5;
-    __pyx_t_5 = 0;
+    __pyx_t_3 = 0;
+    __pyx_r = __pyx_t_1;
+    __pyx_t_1 = 0;
     goto __pyx_L0;
 
     /* "(tree fragment)":10
  *     else:
- *         use_setstate = False
+ *         use_setstate = self.name is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, None), state
  *     else:
  */
   }
 
   /* "(tree fragment)":13
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, None), state
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, None), state
  *     else:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, state)             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, state)             # <<<<<<<<<<<<<<
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_L9__set_state(self, __pyx_state)
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L9); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L9); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_166541794);
-    __Pyx_GIVEREF(__pyx_int_166541794);
-    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_13053218);
+    __Pyx_GIVEREF(__pyx_int_13053218);
+    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_13053218);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_state);
-    __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_2);
-    __pyx_t_5 = 0;
-    __pyx_t_2 = 0;
-    __pyx_r = __pyx_t_1;
+    PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_v_state);
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
     __pyx_t_1 = 0;
+    __pyx_t_3 = 0;
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
     goto __pyx_L0;
   }
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef bint use_setstate
- *     state = (self.state,)
+ *     state = (self.name, self.state)
  */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_AddTraceback("complex_generators.L9.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -2800,25 +3483,25 @@ static PyObject *__pyx_pf_18complex_generators_2L9_6__reduce_cython__(struct __p
 
 /* "(tree fragment)":14
  *     else:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_L9__set_state(self, __pyx_state)
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_2L9_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_2L9_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_18complex_generators_2L9_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_2L9_13__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_2L9_8__setstate_cython__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_18complex_generators_2L9_12__setstate_cython__(((struct __pyx_obj_18complex_generators_L9 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_2L9_8__setstate_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_2L9_12__setstate_cython__(struct __pyx_obj_18complex_generators_L9 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -2827,7 +3510,7 @@ static PyObject *__pyx_pf_18complex_generators_2L9_8__setstate_cython__(struct _
   __Pyx_TraceCall("__setstate_cython__", __pyx_f[1], 14, 0, __PYX_ERR(1, 14, __pyx_L1_error));
 
   /* "(tree fragment)":15
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_L9__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
@@ -2838,7 +3521,7 @@ static PyObject *__pyx_pf_18complex_generators_2L9_8__setstate_cython__(struct _
 
   /* "(tree fragment)":14
  *     else:
- *         return __pyx_unpickle_L9, (type(self), 0x9ed39e2, state)
+ *         return __pyx_unpickle_L9, (type(self), 0x0c72d22, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_L9__set_state(self, __pyx_state)
  */
@@ -2857,7 +3540,7 @@ static PyObject *__pyx_pf_18complex_generators_2L9_8__setstate_cython__(struct _
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":41
+/* "complex_generators.pyx":65
  * cdef class L10:
  *     cdef int[10] state
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
@@ -2894,7 +3577,7 @@ static int __pyx_pw_18complex_generators_3L10_1__init__(PyObject *__pyx_v_self, 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 41, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 65, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2908,7 +3591,7 @@ static int __pyx_pw_18complex_generators_3L10_1__init__(PyObject *__pyx_v_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 41, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 65, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("complex_generators.L10.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2933,40 +3616,40 @@ static int __pyx_pf_18complex_generators_3L10___init__(struct __pyx_obj_18comple
   int __pyx_t_5[10];
   long __pyx_t_6;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceCall("__init__", __pyx_f[0], 41, 0, __PYX_ERR(0, 41, __pyx_L1_error));
+  __Pyx_TraceCall("__init__", __pyx_f[0], 65, 0, __PYX_ERR(0, 65, __pyx_L1_error));
 
-  /* "complex_generators.pyx":42
+  /* "complex_generators.pyx":66
  *     cdef int[10] state
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 10:             # <<<<<<<<<<<<<<
  *             self.state = start_state
  *         else:
  */
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 66, __pyx_L1_error)
   __pyx_t_3 = ((__pyx_t_4 == 10) != 0);
   __pyx_t_1 = __pyx_t_3;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "complex_generators.pyx":43
+    /* "complex_generators.pyx":67
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 10:
  *             self.state = start_state             # <<<<<<<<<<<<<<
  *         else:
  *             self.state = [1 for i in range(10)]
  */
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 10) < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 10) < 0)) __PYX_ERR(0, 67, __pyx_L1_error)
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (10));
 
-    /* "complex_generators.pyx":42
+    /* "complex_generators.pyx":66
  *     cdef int[10] state
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 10:             # <<<<<<<<<<<<<<
@@ -2976,7 +3659,7 @@ static int __pyx_pf_18complex_generators_3L10___init__(struct __pyx_obj_18comple
     goto __pyx_L3;
   }
 
-  /* "complex_generators.pyx":45
+  /* "complex_generators.pyx":69
  *             self.state = start_state
  *         else:
  *             self.state = [1 for i in range(10)]             # <<<<<<<<<<<<<<
@@ -2984,19 +3667,19 @@ static int __pyx_pf_18complex_generators_3L10___init__(struct __pyx_obj_18comple
  *         cdef int new_element
  */
   /*else*/ {
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     for (__pyx_t_6 = 0; __pyx_t_6 < 10; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 45, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 69, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 10) < 0)) __PYX_ERR(0, 45, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 10) < 0)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (10));
   }
   __pyx_L3:;
 
-  /* "complex_generators.pyx":41
+  /* "complex_generators.pyx":65
  * cdef class L10:
  *     cdef int[10] state
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
@@ -3017,7 +3700,7 @@ static int __pyx_pf_18complex_generators_3L10___init__(struct __pyx_obj_18comple
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":46
+/* "complex_generators.pyx":70
  *         else:
  *             self.state = [1 for i in range(10)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -3051,9 +3734,9 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
   Py_ssize_t __pyx_t_5;
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("__next__", 0);
-  __Pyx_TraceCall("__next__", __pyx_f[0], 46, 0, __PYX_ERR(0, 46, __pyx_L1_error));
+  __Pyx_TraceCall("__next__", __pyx_f[0], 70, 0, __PYX_ERR(0, 70, __pyx_L1_error));
 
-  /* "complex_generators.pyx":48
+  /* "complex_generators.pyx":72
  *     def __next__(self):
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[3]             # <<<<<<<<<<<<<<
@@ -3062,20 +3745,20 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
  */
   __pyx_v_new_element = ((__pyx_v_self->state[0]) ^ (__pyx_v_self->state[3]));
 
-  /* "complex_generators.pyx":49
+  /* "complex_generators.pyx":73
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[3]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_int_1);
   __Pyx_GIVEREF(__pyx_int_1);
@@ -3083,16 +3766,16 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_2 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -3100,17 +3783,17 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -3120,7 +3803,7 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 49, __pyx_L1_error)
+          else __PYX_ERR(0, 73, __pyx_L1_error)
         }
         break;
       }
@@ -3129,21 +3812,21 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "complex_generators.pyx":50
+    /* "complex_generators.pyx":74
  *         new_element = self.state[0]^self.state[3]
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]             # <<<<<<<<<<<<<<
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  */
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 74, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 74, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     (__pyx_v_self->state[__pyx_t_6]) = (__pyx_v_self->state[__pyx_t_5]);
 
-    /* "complex_generators.pyx":49
+    /* "complex_generators.pyx":73
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[3]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
@@ -3153,20 +3836,20 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "complex_generators.pyx":51
+  /* "complex_generators.pyx":75
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element             # <<<<<<<<<<<<<<
  *         return new_element
  *     def get_state(self):
  */
-  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   (__pyx_v_self->state[(__pyx_t_2 - 1)]) = __pyx_v_new_element;
 
-  /* "complex_generators.pyx":52
+  /* "complex_generators.pyx":76
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element             # <<<<<<<<<<<<<<
@@ -3174,13 +3857,13 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
  *         return self.state
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":46
+  /* "complex_generators.pyx":70
  *         else:
  *             self.state = [1 for i in range(10)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -3202,12 +3885,12 @@ static PyObject *__pyx_pf_18complex_generators_3L10_2__next__(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":53
+/* "complex_generators.pyx":77
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
  *         return self.state
- * cdef class L11:
+ * 
  */
 
 /* Python wrapper */
@@ -3229,28 +3912,28 @@ static PyObject *__pyx_pf_18complex_generators_3L10_4get_state(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_state", 0);
-  __Pyx_TraceCall("get_state", __pyx_f[0], 53, 0, __PYX_ERR(0, 53, __pyx_L1_error));
+  __Pyx_TraceCall("get_state", __pyx_f[0], 77, 0, __PYX_ERR(0, 77, __pyx_L1_error));
 
-  /* "complex_generators.pyx":54
+  /* "complex_generators.pyx":78
  *         return new_element
  *     def get_state(self):
  *         return self.state             # <<<<<<<<<<<<<<
- * cdef class L11:
- *     cdef int[11] state
+ * 
+ *     def get_octal_state(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":53
+  /* "complex_generators.pyx":77
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
  *         return self.state
- * cdef class L11:
+ * 
  */
 
   /* function exit code */
@@ -3265,6 +3948,128 @@ static PyObject *__pyx_pf_18complex_generators_3L10_4get_state(struct __pyx_obj_
   return __pyx_r;
 }
 
+/* "complex_generators.pyx":80
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L10_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L10_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L10_6get_octal_state(((struct __pyx_obj_18complex_generators_L10 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L10_6get_octal_state(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 80, 0, __PYX_ERR(0, 80, __pyx_L1_error));
+
+  /* "complex_generators.pyx":81
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":82
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":83
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":84
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ * # Done
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":80
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L10.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef bint use_setstate
@@ -3272,19 +4077,19 @@ static PyObject *__pyx_pf_18complex_generators_3L10_4get_state(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L10_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L10_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_18complex_generators_3L10_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L10_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L10_6__reduce_cython__(((struct __pyx_obj_18complex_generators_L10 *)__pyx_v_self));
+  __pyx_r = __pyx_pf_18complex_generators_3L10_8__reduce_cython__(((struct __pyx_obj_18complex_generators_L10 *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L10_6__reduce_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self) {
+static PyObject *__pyx_pf_18complex_generators_3L10_8__reduce_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self) {
   int __pyx_v_use_setstate;
   PyObject *__pyx_v_state = NULL;
   PyObject *__pyx_v__dict = NULL;
@@ -3508,19 +4313,19 @@ static PyObject *__pyx_pf_18complex_generators_3L10_6__reduce_cython__(struct __
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L10_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L10_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_18complex_generators_3L10_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L10_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L10_8__setstate_cython__(((struct __pyx_obj_18complex_generators_L10 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_18complex_generators_3L10_10__setstate_cython__(((struct __pyx_obj_18complex_generators_L10 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L10_8__setstate_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_3L10_10__setstate_cython__(struct __pyx_obj_18complex_generators_L10 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -3559,9 +4364,9 @@ static PyObject *__pyx_pf_18complex_generators_3L10_8__setstate_cython__(struct 
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":57
- * cdef class L11:
+/* "complex_generators.pyx":90
  *     cdef int[11] state
+ * 
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 11:
  *             self.state = start_state
@@ -3596,7 +4401,7 @@ static int __pyx_pw_18complex_generators_3L11_1__init__(PyObject *__pyx_v_self, 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 57, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 90, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3610,7 +4415,7 @@ static int __pyx_pw_18complex_generators_3L11_1__init__(PyObject *__pyx_v_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 57, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 90, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("complex_generators.L11.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3635,41 +4440,41 @@ static int __pyx_pf_18complex_generators_3L11___init__(struct __pyx_obj_18comple
   int __pyx_t_5[11];
   long __pyx_t_6;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceCall("__init__", __pyx_f[0], 57, 0, __PYX_ERR(0, 57, __pyx_L1_error));
+  __Pyx_TraceCall("__init__", __pyx_f[0], 90, 0, __PYX_ERR(0, 90, __pyx_L1_error));
 
-  /* "complex_generators.pyx":58
- *     cdef int[11] state
+  /* "complex_generators.pyx":91
+ * 
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 11:             # <<<<<<<<<<<<<<
  *             self.state = start_state
  *         else:
  */
-  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
   } else {
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
   __pyx_t_3 = ((__pyx_t_4 == 11) != 0);
   __pyx_t_1 = __pyx_t_3;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "complex_generators.pyx":59
+    /* "complex_generators.pyx":92
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 11:
  *             self.state = start_state             # <<<<<<<<<<<<<<
  *         else:
  *             self.state = [1 for i in range(11)]
  */
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 11) < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 11) < 0)) __PYX_ERR(0, 92, __pyx_L1_error)
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (11));
 
-    /* "complex_generators.pyx":58
- *     cdef int[11] state
+    /* "complex_generators.pyx":91
+ * 
  *     def __init__(self,start_state = None):
  *         if type(start_state) == list and len(start_state) == 11:             # <<<<<<<<<<<<<<
  *             self.state = start_state
@@ -3678,7 +4483,7 @@ static int __pyx_pf_18complex_generators_3L11___init__(struct __pyx_obj_18comple
     goto __pyx_L3;
   }
 
-  /* "complex_generators.pyx":61
+  /* "complex_generators.pyx":94
  *             self.state = start_state
  *         else:
  *             self.state = [1 for i in range(11)]             # <<<<<<<<<<<<<<
@@ -3686,21 +4491,21 @@ static int __pyx_pf_18complex_generators_3L11___init__(struct __pyx_obj_18comple
  *         cdef int new_element
  */
   /*else*/ {
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     for (__pyx_t_6 = 0; __pyx_t_6 < 11; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 61, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 94, __pyx_L1_error)
     }
-    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 11) < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 11) < 0)) __PYX_ERR(0, 94, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (11));
   }
   __pyx_L3:;
 
-  /* "complex_generators.pyx":57
- * cdef class L11:
+  /* "complex_generators.pyx":90
  *     cdef int[11] state
+ * 
  *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
  *         if type(start_state) == list and len(start_state) == 11:
  *             self.state = start_state
@@ -3719,7 +4524,7 @@ static int __pyx_pf_18complex_generators_3L11___init__(struct __pyx_obj_18comple
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":62
+/* "complex_generators.pyx":95
  *         else:
  *             self.state = [1 for i in range(11)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -3753,9 +4558,9 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
   Py_ssize_t __pyx_t_5;
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("__next__", 0);
-  __Pyx_TraceCall("__next__", __pyx_f[0], 62, 0, __PYX_ERR(0, 62, __pyx_L1_error));
+  __Pyx_TraceCall("__next__", __pyx_f[0], 95, 0, __PYX_ERR(0, 95, __pyx_L1_error));
 
-  /* "complex_generators.pyx":64
+  /* "complex_generators.pyx":97
  *     def __next__(self):
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[2]             # <<<<<<<<<<<<<<
@@ -3764,20 +4569,20 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
  */
   __pyx_v_new_element = ((__pyx_v_self->state[0]) ^ (__pyx_v_self->state[2]));
 
-  /* "complex_generators.pyx":65
+  /* "complex_generators.pyx":98
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[2]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  */
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_int_1);
   __Pyx_GIVEREF(__pyx_int_1);
@@ -3785,16 +4590,16 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_2 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 98, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -3802,17 +4607,17 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 98, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 98, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -3822,7 +4627,7 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 65, __pyx_L1_error)
+          else __PYX_ERR(0, 98, __pyx_L1_error)
         }
         break;
       }
@@ -3831,21 +4636,21 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "complex_generators.pyx":66
+    /* "complex_generators.pyx":99
  *         new_element = self.state[0]^self.state[2]
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]             # <<<<<<<<<<<<<<
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  */
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     (__pyx_v_self->state[__pyx_t_6]) = (__pyx_v_self->state[__pyx_t_5]);
 
-    /* "complex_generators.pyx":65
+    /* "complex_generators.pyx":98
  *         cdef int new_element
  *         new_element = self.state[0]^self.state[2]
  *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
@@ -3855,20 +4660,20 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "complex_generators.pyx":67
+  /* "complex_generators.pyx":100
  *         for i in range(1,len(self.state)):
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element             # <<<<<<<<<<<<<<
  *         return new_element
  *     def get_state(self):
  */
-  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   (__pyx_v_self->state[(__pyx_t_2 - 1)]) = __pyx_v_new_element;
 
-  /* "complex_generators.pyx":68
+  /* "complex_generators.pyx":101
  *             self.state[i-1] = self.state[i]
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element             # <<<<<<<<<<<<<<
@@ -3876,13 +4681,13 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
  *         return self.state
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":62
+  /* "complex_generators.pyx":95
  *         else:
  *             self.state = [1 for i in range(11)]
  *     def __next__(self):             # <<<<<<<<<<<<<<
@@ -3904,7 +4709,7 @@ static PyObject *__pyx_pf_18complex_generators_3L11_2__next__(struct __pyx_obj_1
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":69
+/* "complex_generators.pyx":102
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
@@ -3931,23 +4736,23 @@ static PyObject *__pyx_pf_18complex_generators_3L11_4get_state(struct __pyx_obj_
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_state", 0);
-  __Pyx_TraceCall("get_state", __pyx_f[0], 69, 0, __PYX_ERR(0, 69, __pyx_L1_error));
+  __Pyx_TraceCall("get_state", __pyx_f[0], 102, 0, __PYX_ERR(0, 102, __pyx_L1_error));
 
-  /* "complex_generators.pyx":70
+  /* "complex_generators.pyx":103
  *         return new_element
  *     def get_state(self):
  *         return self.state             # <<<<<<<<<<<<<<
  * 
- * cdef class Geffe:
+ *     def get_octal_state(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 11); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":69
+  /* "complex_generators.pyx":102
  *         self.state[len(self.state) - 1] = new_element
  *         return new_element
  *     def get_state(self):             # <<<<<<<<<<<<<<
@@ -3967,6 +4772,128 @@ static PyObject *__pyx_pf_18complex_generators_3L11_4get_state(struct __pyx_obj_
   return __pyx_r;
 }
 
+/* "complex_generators.pyx":105
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L11_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L11_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L11_6get_octal_state(((struct __pyx_obj_18complex_generators_L11 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L11_6get_octal_state(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 105, 0, __PYX_ERR(0, 105, __pyx_L1_error));
+
+  /* "complex_generators.pyx":106
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":107
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":108
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":109
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":105
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L11.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef bint use_setstate
@@ -3974,19 +4901,19 @@ static PyObject *__pyx_pf_18complex_generators_3L11_4get_state(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L11_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L11_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_18complex_generators_3L11_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L11_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L11_6__reduce_cython__(((struct __pyx_obj_18complex_generators_L11 *)__pyx_v_self));
+  __pyx_r = __pyx_pf_18complex_generators_3L11_8__reduce_cython__(((struct __pyx_obj_18complex_generators_L11 *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L11_6__reduce_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self) {
+static PyObject *__pyx_pf_18complex_generators_3L11_8__reduce_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self) {
   int __pyx_v_use_setstate;
   PyObject *__pyx_v_state = NULL;
   PyObject *__pyx_v__dict = NULL;
@@ -4210,19 +5137,19 @@ static PyObject *__pyx_pf_18complex_generators_3L11_6__reduce_cython__(struct __
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_3L11_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_3L11_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_18complex_generators_3L11_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L11_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_3L11_8__setstate_cython__(((struct __pyx_obj_18complex_generators_L11 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_18complex_generators_3L11_10__setstate_cython__(((struct __pyx_obj_18complex_generators_L11 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_3L11_8__setstate_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_3L11_10__setstate_cython__(struct __pyx_obj_18complex_generators_L11 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -4261,7 +5188,831 @@ static PyObject *__pyx_pf_18complex_generators_3L11_8__setstate_cython__(struct 
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":76
+/* "complex_generators.pyx":115
+ *     cdef int[20] state
+ * 
+ *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
+ *         if type(start_state) == list and len(start_state) == 20:
+ *             self.state = start_state
+ */
+
+/* Python wrapper */
+static int __pyx_pw_18complex_generators_3L20_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_18complex_generators_3L20_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_start_state = 0;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_start_state,0};
+    PyObject* values[1] = {0};
+    values[0] = ((PyObject *)Py_None);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_start_state);
+          if (value) { values[0] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 115, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_start_state = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 115, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("complex_generators.L20.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_18complex_generators_3L20___init__(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self), __pyx_v_start_state);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_18complex_generators_3L20___init__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self, PyObject *__pyx_v_start_state) {
+  CYTHON_UNUSED long __pyx_v_i;
+  int __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_t_3;
+  Py_ssize_t __pyx_t_4;
+  int __pyx_t_5[20];
+  long __pyx_t_6;
+  __Pyx_RefNannySetupContext("__init__", 0);
+  __Pyx_TraceCall("__init__", __pyx_f[0], 115, 0, __PYX_ERR(0, 115, __pyx_L1_error));
+
+  /* "complex_generators.pyx":116
+ * 
+ *     def __init__(self,start_state = None):
+ *         if type(start_state) == list and len(start_state) == 20:             # <<<<<<<<<<<<<<
+ *             self.state = start_state
+ *         else:
+ */
+  __pyx_t_2 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_start_state)), ((PyObject *)(&PyList_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__pyx_t_3) {
+  } else {
+    __pyx_t_1 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_4 = PyObject_Length(__pyx_v_start_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = ((__pyx_t_4 == 20) != 0);
+  __pyx_t_1 = __pyx_t_3;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_1) {
+
+    /* "complex_generators.pyx":117
+ *     def __init__(self,start_state = None):
+ *         if type(start_state) == list and len(start_state) == 20:
+ *             self.state = start_state             # <<<<<<<<<<<<<<
+ *         else:
+ *             self.state = [1 for i in range(20)]
+ */
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_v_start_state, __pyx_t_5, 20) < 0)) __PYX_ERR(0, 117, __pyx_L1_error)
+    memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (20));
+
+    /* "complex_generators.pyx":116
+ * 
+ *     def __init__(self,start_state = None):
+ *         if type(start_state) == list and len(start_state) == 20:             # <<<<<<<<<<<<<<
+ *             self.state = start_state
+ *         else:
+ */
+    goto __pyx_L3;
+  }
+
+  /* "complex_generators.pyx":119
+ *             self.state = start_state
+ *         else:
+ *             self.state = [1 for i in range(20)]             # <<<<<<<<<<<<<<
+ * 
+ *     def __next__(self):
+ */
+  /*else*/ {
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    for (__pyx_t_6 = 0; __pyx_t_6 < 20; __pyx_t_6+=1) {
+      __pyx_v_i = __pyx_t_6;
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_int_1))) __PYX_ERR(0, 119, __pyx_L1_error)
+    }
+    if (unlikely(__Pyx_carray_from_py_int(__pyx_t_2, __pyx_t_5, 20) < 0)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    memcpy(&(__pyx_v_self->state[0]), __pyx_t_5, sizeof(__pyx_v_self->state[0]) * (20));
+  }
+  __pyx_L3:;
+
+  /* "complex_generators.pyx":115
+ *     cdef int[20] state
+ * 
+ *     def __init__(self,start_state = None):             # <<<<<<<<<<<<<<
+ *         if type(start_state) == list and len(start_state) == 20:
+ *             self.state = start_state
+ */
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("complex_generators.L20.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":121
+ *             self.state = [1 for i in range(20)]
+ * 
+ *     def __next__(self):             # <<<<<<<<<<<<<<
+ *         cdef int new_element
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L20_3__next__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L20_3__next__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__next__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L20_2__next__(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L20_2__next__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self) {
+  int __pyx_v_new_element;
+  PyObject *__pyx_v_i = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *(*__pyx_t_4)(PyObject *);
+  Py_ssize_t __pyx_t_5;
+  Py_ssize_t __pyx_t_6;
+  __Pyx_RefNannySetupContext("__next__", 0);
+  __Pyx_TraceCall("__next__", __pyx_f[0], 121, 0, __PYX_ERR(0, 121, __pyx_L1_error));
+
+  /* "complex_generators.pyx":123
+ *     def __next__(self):
+ *         cdef int new_element
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]             # <<<<<<<<<<<<<<
+ *         for i in range(1,len(self.state)):
+ *             self.state[i-1] = self.state[i]
+ */
+  __pyx_v_new_element = ((((__pyx_v_self->state[0]) ^ (__pyx_v_self->state[11])) ^ (__pyx_v_self->state[15])) ^ (__pyx_v_self->state[17]));
+
+  /* "complex_generators.pyx":124
+ *         cdef int new_element
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]
+ *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
+ *             self.state[i-1] = self.state[i]
+ *         self.state[len(self.state) - 1] = new_element
+ */
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_int_1);
+  __Pyx_GIVEREF(__pyx_int_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_int_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
+    __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_2 = 0;
+    __pyx_t_4 = NULL;
+  } else {
+    __pyx_t_2 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  for (;;) {
+    if (likely(!__pyx_t_4)) {
+      if (likely(PyList_CheckExact(__pyx_t_3))) {
+        if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_3)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
+        #else
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        #endif
+      } else {
+        if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_2); __Pyx_INCREF(__pyx_t_1); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
+        #else
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        #endif
+      }
+    } else {
+      __pyx_t_1 = __pyx_t_4(__pyx_t_3);
+      if (unlikely(!__pyx_t_1)) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+          if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+          else __PYX_ERR(0, 124, __pyx_L1_error)
+        }
+        break;
+      }
+      __Pyx_GOTREF(__pyx_t_1);
+    }
+    __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "complex_generators.pyx":125
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]
+ *         for i in range(1,len(self.state)):
+ *             self.state[i-1] = self.state[i]             # <<<<<<<<<<<<<<
+ *         self.state[len(self.state) - 1] = new_element
+ *         return new_element
+ */
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_v_i); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_i, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_6 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    (__pyx_v_self->state[__pyx_t_6]) = (__pyx_v_self->state[__pyx_t_5]);
+
+    /* "complex_generators.pyx":124
+ *         cdef int new_element
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]
+ *         for i in range(1,len(self.state)):             # <<<<<<<<<<<<<<
+ *             self.state[i-1] = self.state[i]
+ *         self.state[len(self.state) - 1] = new_element
+ */
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  /* "complex_generators.pyx":126
+ *         for i in range(1,len(self.state)):
+ *             self.state[i-1] = self.state[i]
+ *         self.state[len(self.state) - 1] = new_element             # <<<<<<<<<<<<<<
+ *         return new_element
+ * 
+ */
+  __pyx_t_3 = __Pyx_carray_to_py_int(__pyx_v_self->state, 20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  (__pyx_v_self->state[(__pyx_t_2 - 1)]) = __pyx_v_new_element;
+
+  /* "complex_generators.pyx":127
+ *             self.state[i-1] = self.state[i]
+ *         self.state[len(self.state) - 1] = new_element
+ *         return new_element             # <<<<<<<<<<<<<<
+ * 
+ *     def get_state(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_new_element); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":121
+ *             self.state = [1 for i in range(20)]
+ * 
+ *     def __next__(self):             # <<<<<<<<<<<<<<
+ *         cdef int new_element
+ *         new_element = self.state[0]^self.state[11]^self.state[15]^self.state[17]
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L20.__next__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_i);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":129
+ *         return new_element
+ * 
+ *     def get_state(self):             # <<<<<<<<<<<<<<
+ *         return self.state
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L20_5get_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L20_5get_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("get_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L20_4get_state(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L20_4get_state(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("get_state", 0);
+  __Pyx_TraceCall("get_state", __pyx_f[0], 129, 0, __PYX_ERR(0, 129, __pyx_L1_error));
+
+  /* "complex_generators.pyx":130
+ * 
+ *     def get_state(self):
+ *         return self.state             # <<<<<<<<<<<<<<
+ * 
+ *     def get_octal_state(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 20); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":129
+ *         return new_element
+ * 
+ *     def get_state(self):             # <<<<<<<<<<<<<<
+ *         return self.state
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L20.get_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":132
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L20_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L20_7get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L20_6get_octal_state(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L20_6get_octal_state(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 132, 0, __PYX_ERR(0, 132, __pyx_L1_error));
+
+  /* "complex_generators.pyx":133
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":134
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":135
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":136
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ * # Done
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":132
+ *         return self.state
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.L20.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef bint use_setstate
+ *     state = (self.state,)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L20_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L20_9__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L20_8__reduce_cython__(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L20_8__reduce_cython__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self) {
+  int __pyx_v_use_setstate;
+  PyObject *__pyx_v_state = NULL;
+  PyObject *__pyx_v__dict = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  __Pyx_RefNannySetupContext("__reduce_cython__", 0);
+  __Pyx_TraceCall("__reduce_cython__", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
+
+  /* "(tree fragment)":3
+ * def __reduce_cython__(self):
+ *     cdef bint use_setstate
+ *     state = (self.state,)             # <<<<<<<<<<<<<<
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:
+ */
+  __pyx_t_1 = __Pyx_carray_to_py_int(__pyx_v_self->state, 20); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_v_state = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "(tree fragment)":4
+ *     cdef bint use_setstate
+ *     state = (self.state,)
+ *     _dict = getattr(self, '__dict__', None)             # <<<<<<<<<<<<<<
+ *     if _dict is not None:
+ *         state += (_dict,)
+ */
+  __pyx_t_2 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v__dict = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "(tree fragment)":5
+ *     state = (self.state,)
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:             # <<<<<<<<<<<<<<
+ *         state += (_dict,)
+ *         use_setstate = True
+ */
+  __pyx_t_3 = (__pyx_v__dict != Py_None);
+  __pyx_t_4 = (__pyx_t_3 != 0);
+  if (__pyx_t_4) {
+
+    /* "(tree fragment)":6
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:
+ *         state += (_dict,)             # <<<<<<<<<<<<<<
+ *         use_setstate = True
+ *     else:
+ */
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_v__dict);
+    __Pyx_GIVEREF(__pyx_v__dict);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v__dict);
+    __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_state, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "(tree fragment)":7
+ *     if _dict is not None:
+ *         state += (_dict,)
+ *         use_setstate = True             # <<<<<<<<<<<<<<
+ *     else:
+ *         use_setstate = False
+ */
+    __pyx_v_use_setstate = 1;
+
+    /* "(tree fragment)":5
+ *     state = (self.state,)
+ *     _dict = getattr(self, '__dict__', None)
+ *     if _dict is not None:             # <<<<<<<<<<<<<<
+ *         state += (_dict,)
+ *         use_setstate = True
+ */
+    goto __pyx_L3;
+  }
+
+  /* "(tree fragment)":9
+ *         use_setstate = True
+ *     else:
+ *         use_setstate = False             # <<<<<<<<<<<<<<
+ *     if use_setstate:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, None), state
+ */
+  /*else*/ {
+    __pyx_v_use_setstate = 0;
+  }
+  __pyx_L3:;
+
+  /* "(tree fragment)":10
+ *     else:
+ *         use_setstate = False
+ *     if use_setstate:             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, None), state
+ *     else:
+ */
+  __pyx_t_4 = (__pyx_v_use_setstate != 0);
+  if (__pyx_t_4) {
+
+    /* "(tree fragment)":11
+ *         use_setstate = False
+ *     if use_setstate:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, None), state             # <<<<<<<<<<<<<<
+ *     else:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, state)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L20); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_166541794);
+    __Pyx_GIVEREF(__pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    __Pyx_INCREF(Py_None);
+    __Pyx_GIVEREF(Py_None);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, Py_None);
+    __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 11, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_1);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+    __Pyx_INCREF(__pyx_v_state);
+    __Pyx_GIVEREF(__pyx_v_state);
+    PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_v_state);
+    __pyx_t_1 = 0;
+    __pyx_t_2 = 0;
+    __pyx_r = __pyx_t_5;
+    __pyx_t_5 = 0;
+    goto __pyx_L0;
+
+    /* "(tree fragment)":10
+ *     else:
+ *         use_setstate = False
+ *     if use_setstate:             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, None), state
+ *     else:
+ */
+  }
+
+  /* "(tree fragment)":13
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, None), state
+ *     else:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, state)             # <<<<<<<<<<<<<<
+ * def __setstate_cython__(self, __pyx_state):
+ *     __pyx_unpickle_L20__set_state(self, __pyx_state)
+ */
+  /*else*/ {
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_pyx_unpickle_L20); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_166541794);
+    __Pyx_GIVEREF(__pyx_int_166541794);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_int_166541794);
+    __Pyx_INCREF(__pyx_v_state);
+    __Pyx_GIVEREF(__pyx_v_state);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_state);
+    __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_2);
+    __pyx_t_5 = 0;
+    __pyx_t_2 = 0;
+    __pyx_r = __pyx_t_1;
+    __pyx_t_1 = 0;
+    goto __pyx_L0;
+  }
+
+  /* "(tree fragment)":1
+ * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
+ *     cdef bint use_setstate
+ *     state = (self.state,)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("complex_generators.L20.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_state);
+  __Pyx_XDECREF(__pyx_v__dict);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":14
+ *     else:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, state)
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_unpickle_L20__set_state(self, __pyx_state)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_3L20_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_3L20_11__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_3L20_10__setstate_cython__(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_3L20_10__setstate_cython__(struct __pyx_obj_18complex_generators_L20 *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("__setstate_cython__", 0);
+  __Pyx_TraceCall("__setstate_cython__", __pyx_f[1], 14, 0, __PYX_ERR(1, 14, __pyx_L1_error));
+
+  /* "(tree fragment)":15
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, state)
+ * def __setstate_cython__(self, __pyx_state):
+ *     __pyx_unpickle_L20__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
+ */
+  if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 15, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_18complex_generators___pyx_unpickle_L20__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 15, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "(tree fragment)":14
+ *     else:
+ *         return __pyx_unpickle_L20, (type(self), 0x9ed39e2, state)
+ * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_unpickle_L20__set_state(self, __pyx_state)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("complex_generators.L20.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "complex_generators.pyx":143
  *     cdef L9 y
  *     cdef L10 s
  *     def __init__(self,x,y,s):             # <<<<<<<<<<<<<<
@@ -4303,17 +6054,17 @@ static int __pyx_pw_18complex_generators_5Geffe_1__init__(PyObject *__pyx_v_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(0, 76, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(0, 143, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(0, 76, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(0, 143, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 76, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 143, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -4328,7 +6079,7 @@ static int __pyx_pw_18complex_generators_5Geffe_1__init__(PyObject *__pyx_v_self
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 76, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 143, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("complex_generators.Geffe.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4347,16 +6098,16 @@ static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18comp
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
-  __Pyx_TraceCall("__init__", __pyx_f[0], 76, 0, __PYX_ERR(0, 76, __pyx_L1_error));
+  __Pyx_TraceCall("__init__", __pyx_f[0], 143, 0, __PYX_ERR(0, 143, __pyx_L1_error));
 
-  /* "complex_generators.pyx":77
+  /* "complex_generators.pyx":144
  *     cdef L10 s
  *     def __init__(self,x,y,s):
  *         self.x = x             # <<<<<<<<<<<<<<
  *         self.y = y
  *         self.s = s
  */
-  if (!(likely(((__pyx_v_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_x, __pyx_ptype_18complex_generators_L11))))) __PYX_ERR(0, 77, __pyx_L1_error)
+  if (!(likely(((__pyx_v_x) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_x, __pyx_ptype_18complex_generators_L11))))) __PYX_ERR(0, 144, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_x;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -4365,14 +6116,14 @@ static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18comp
   __pyx_v_self->x = ((struct __pyx_obj_18complex_generators_L11 *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "complex_generators.pyx":78
+  /* "complex_generators.pyx":145
  *     def __init__(self,x,y,s):
  *         self.x = x
  *         self.y = y             # <<<<<<<<<<<<<<
  *         self.s = s
- *     def __next__(self):
+ * 
  */
-  if (!(likely(((__pyx_v_y) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_y, __pyx_ptype_18complex_generators_L9))))) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (!(likely(((__pyx_v_y) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_y, __pyx_ptype_18complex_generators_L9))))) __PYX_ERR(0, 145, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_y;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -4381,14 +6132,14 @@ static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18comp
   __pyx_v_self->y = ((struct __pyx_obj_18complex_generators_L9 *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "complex_generators.pyx":79
+  /* "complex_generators.pyx":146
  *         self.x = x
  *         self.y = y
  *         self.s = s             # <<<<<<<<<<<<<<
+ * 
  *     def __next__(self):
- *         cdef int x_new = next(self.x)
  */
-  if (!(likely(((__pyx_v_s) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_s, __pyx_ptype_18complex_generators_L10))))) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (!(likely(((__pyx_v_s) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_s, __pyx_ptype_18complex_generators_L10))))) __PYX_ERR(0, 146, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_s;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -4397,7 +6148,7 @@ static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18comp
   __pyx_v_self->s = ((struct __pyx_obj_18complex_generators_L10 *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "complex_generators.pyx":76
+  /* "complex_generators.pyx":143
  *     cdef L9 y
  *     cdef L10 s
  *     def __init__(self,x,y,s):             # <<<<<<<<<<<<<<
@@ -4418,9 +6169,9 @@ static int __pyx_pf_18complex_generators_5Geffe___init__(struct __pyx_obj_18comp
   return __pyx_r;
 }
 
-/* "complex_generators.pyx":80
- *         self.y = y
+/* "complex_generators.pyx":148
  *         self.s = s
+ * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
  *         cdef int x_new = next(self.x)
  *         cdef int y_new = next(self.y)
@@ -4450,10 +6201,10 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj
   PyObject *__pyx_t_2 = NULL;
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("__next__", 0);
-  __Pyx_TraceCall("__next__", __pyx_f[0], 80, 0, __PYX_ERR(0, 80, __pyx_L1_error));
+  __Pyx_TraceCall("__next__", __pyx_f[0], 148, 0, __PYX_ERR(0, 148, __pyx_L1_error));
 
-  /* "complex_generators.pyx":81
- *         self.s = s
+  /* "complex_generators.pyx":149
+ * 
  *     def __next__(self):
  *         cdef int x_new = next(self.x)             # <<<<<<<<<<<<<<
  *         cdef int y_new = next(self.y)
@@ -4461,14 +6212,14 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_self->x);
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_x_new = __pyx_t_3;
 
-  /* "complex_generators.pyx":82
+  /* "complex_generators.pyx":150
  *     def __next__(self):
  *         cdef int x_new = next(self.x)
  *         cdef int y_new = next(self.y)             # <<<<<<<<<<<<<<
@@ -4477,43 +6228,46 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj
  */
   __pyx_t_2 = ((PyObject *)__pyx_v_self->y);
   __Pyx_INCREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyIter_Next(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyIter_Next(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_y_new = __pyx_t_3;
 
-  /* "complex_generators.pyx":83
+  /* "complex_generators.pyx":151
  *         cdef int x_new = next(self.x)
  *         cdef int y_new = next(self.y)
  *         cdef int s_new = next(self.s)             # <<<<<<<<<<<<<<
  *         return s_new&x_new ^ (1^s_new) & y_new
+ * 
  */
   __pyx_t_1 = ((PyObject *)__pyx_v_self->s);
   __Pyx_INCREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyIter_Next(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_s_new = __pyx_t_3;
 
-  /* "complex_generators.pyx":84
+  /* "complex_generators.pyx":152
  *         cdef int y_new = next(self.y)
  *         cdef int s_new = next(self.s)
  *         return s_new&x_new ^ (1^s_new) & y_new             # <<<<<<<<<<<<<<
+ * 
+ *     def get_octal_state(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyInt_From_long(((__pyx_v_s_new & __pyx_v_x_new) ^ ((1 ^ __pyx_v_s_new) & __pyx_v_y_new))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_long(((__pyx_v_s_new & __pyx_v_x_new) ^ ((1 ^ __pyx_v_s_new) & __pyx_v_y_new))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "complex_generators.pyx":80
- *         self.y = y
+  /* "complex_generators.pyx":148
  *         self.s = s
+ * 
  *     def __next__(self):             # <<<<<<<<<<<<<<
  *         cdef int x_new = next(self.x)
  *         cdef int y_new = next(self.y)
@@ -4532,6 +6286,128 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj
   return __pyx_r;
 }
 
+/* "complex_generators.pyx":154
+ *         return s_new&x_new ^ (1^s_new) & y_new
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_5Geffe_5get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_5Geffe_5get_octal_state(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("get_octal_state (wrapper)", 0);
+  __pyx_r = __pyx_pf_18complex_generators_5Geffe_4get_octal_state(((struct __pyx_obj_18complex_generators_Geffe *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_5Geffe_4get_octal_state(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self) {
+  PyObject *__pyx_v_result = NULL;
+  CYTHON_UNUSED long __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  long __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("get_octal_state", 0);
+  __Pyx_TraceCall("get_octal_state", __pyx_f[0], 154, 0, __PYX_ERR(0, 154, __pyx_L1_error));
+
+  /* "complex_generators.pyx":155
+ * 
+ *     def get_octal_state(self):
+ *         result = ''             # <<<<<<<<<<<<<<
+ *         for i in range(8):
+ *             result += str(next(self))
+ */
+  __Pyx_INCREF(__pyx_kp_s_);
+  __pyx_v_result = __pyx_kp_s_;
+
+  /* "complex_generators.pyx":156
+ *     def get_octal_state(self):
+ *         result = ''
+ *         for i in range(8):             # <<<<<<<<<<<<<<
+ *             result += str(next(self))
+ *         return int(result, 2)
+ */
+  for (__pyx_t_1 = 0; __pyx_t_1 < 8; __pyx_t_1+=1) {
+    __pyx_v_i = __pyx_t_1;
+
+    /* "complex_generators.pyx":157
+ *         result = ''
+ *         for i in range(8):
+ *             result += str(next(self))             # <<<<<<<<<<<<<<
+ *         return int(result, 2)
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyIter_Next(((PyObject *)__pyx_v_self)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_result, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF_SET(__pyx_v_result, __pyx_t_3);
+    __pyx_t_3 = 0;
+  }
+
+  /* "complex_generators.pyx":158
+ *         for i in range(8):
+ *             result += str(next(self))
+ *         return int(result, 2)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_result);
+  __Pyx_GIVEREF(__pyx_v_result);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_result);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_2);
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)(&PyInt_Type)), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "complex_generators.pyx":154
+ *         return s_new&x_new ^ (1^s_new) & y_new
+ * 
+ *     def get_octal_state(self):             # <<<<<<<<<<<<<<
+ *         result = ''
+ *         for i in range(8):
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("complex_generators.Geffe.get_octal_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef bint use_setstate
@@ -4539,19 +6415,19 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_2__next__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_5Geffe_5__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_5Geffe_5__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_18complex_generators_5Geffe_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_5Geffe_7__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_5Geffe_4__reduce_cython__(((struct __pyx_obj_18complex_generators_Geffe *)__pyx_v_self));
+  __pyx_r = __pyx_pf_18complex_generators_5Geffe_6__reduce_cython__(((struct __pyx_obj_18complex_generators_Geffe *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_5Geffe_4__reduce_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self) {
+static PyObject *__pyx_pf_18complex_generators_5Geffe_6__reduce_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self) {
   int __pyx_v_use_setstate;
   PyObject *__pyx_v_state = NULL;
   PyObject *__pyx_v__dict = NULL;
@@ -4798,19 +6674,19 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_4__reduce_cython__(struct 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_5Geffe_7__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_18complex_generators_5Geffe_7__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_18complex_generators_5Geffe_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_18complex_generators_5Geffe_9__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_18complex_generators_5Geffe_6__setstate_cython__(((struct __pyx_obj_18complex_generators_Geffe *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_18complex_generators_5Geffe_8__setstate_cython__(((struct __pyx_obj_18complex_generators_Geffe *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_5Geffe_6__setstate_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_5Geffe_8__setstate_cython__(struct __pyx_obj_18complex_generators_Geffe *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -4851,7 +6727,7 @@ static PyObject *__pyx_pf_18complex_generators_5Geffe_6__setstate_cython__(struc
 
 /* "(tree fragment)":1
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
 
@@ -4941,24 +6817,24 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
-  __Pyx_TraceFrameInit(__pyx_codeobj_)
+  __Pyx_TraceFrameInit(__pyx_codeobj__2)
   __Pyx_RefNannySetupContext("__pyx_unpickle_L89", 0);
   __Pyx_TraceCall("__pyx_unpickle_L89", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":2
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x0c72d22:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  */
-  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x9ed39e2) != 0);
+  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x0c72d22) != 0);
   if (__pyx_t_1) {
 
     /* "(tree fragment)":3
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError             # <<<<<<<<<<<<<<
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L89.__new__(__pyx_type)
  */
     __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
@@ -4977,15 +6853,15 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":4
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)             # <<<<<<<<<<<<<<
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)             # <<<<<<<<<<<<<<
  *     __pyx_result = L89.__new__(__pyx_type)
  *     if __pyx_state is not None:
  */
     __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x9e, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 4, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x0c, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 4, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_v___pyx_PickleError);
@@ -5041,15 +6917,15 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
 
     /* "(tree fragment)":2
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x0c72d22:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  */
   }
 
   /* "(tree fragment)":5
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L89.__new__(__pyx_type)             # <<<<<<<<<<<<<<
  *     if __pyx_state is not None:
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
@@ -5103,7 +6979,7 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
   __pyx_t_3 = 0;
 
   /* "(tree fragment)":6
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L89.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
@@ -5126,7 +7002,7 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":6
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L89.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
@@ -5139,7 +7015,7 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
  *     return __pyx_result             # <<<<<<<<<<<<<<
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v___pyx_result);
@@ -5148,7 +7024,7 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
 
@@ -5174,8 +7050,8 @@ static PyObject *__pyx_pf_18complex_generators___pyx_unpickle_L89(CYTHON_UNUSED 
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
 
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(struct __pyx_obj_18complex_generators_L89 *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
@@ -5198,9 +7074,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
   /* "(tree fragment)":10
  *     return __pyx_result
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]             # <<<<<<<<<<<<<<
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -5208,22 +7084,30 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_name, __pyx_t_1) < 0) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 10, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__Pyx_carray_from_py_int(__pyx_t_1, __pyx_t_2, 89) < 0)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   memcpy(&(__pyx_v___pyx_result->state[0]), __pyx_t_2, sizeof(__pyx_v___pyx_result->state[0]) * (89));
 
   /* "(tree fragment)":11
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
     __PYX_ERR(1, 11, __pyx_L1_error)
   }
   __pyx_t_4 = PyTuple_GET_SIZE(__pyx_v___pyx_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 11, __pyx_L1_error)
-  __pyx_t_5 = ((__pyx_t_4 > 1) != 0);
+  __pyx_t_5 = ((__pyx_t_4 > 2) != 0);
   if (__pyx_t_5) {
   } else {
     __pyx_t_3 = __pyx_t_5;
@@ -5236,9 +7120,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
   if (__pyx_t_3) {
 
     /* "(tree fragment)":12
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[1])             # <<<<<<<<<<<<<<
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[2])             # <<<<<<<<<<<<<<
  */
     __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
@@ -5249,7 +7133,7 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(1, 12, __pyx_L1_error)
     }
-    __pyx_t_7 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_9 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -5301,9 +7185,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
 
     /* "(tree fragment)":11
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   }
 
@@ -5311,8 +7195,8 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
 
   /* function exit code */
@@ -5335,7 +7219,7 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L89__set_state(stru
 
 /* "(tree fragment)":1
  * def __pyx_unpickle_L9(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
 
@@ -5425,24 +7309,24 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
-  __Pyx_TraceFrameInit(__pyx_codeobj__2)
+  __Pyx_TraceFrameInit(__pyx_codeobj__3)
   __Pyx_RefNannySetupContext("__pyx_unpickle_L9", 0);
   __Pyx_TraceCall("__pyx_unpickle_L9", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
   /* "(tree fragment)":2
  * def __pyx_unpickle_L9(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x0c72d22:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  */
-  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x9ed39e2) != 0);
+  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x0c72d22) != 0);
   if (__pyx_t_1) {
 
     /* "(tree fragment)":3
  * def __pyx_unpickle_L9(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError             # <<<<<<<<<<<<<<
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L9.__new__(__pyx_type)
  */
     __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
@@ -5461,15 +7345,15 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":4
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)             # <<<<<<<<<<<<<<
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)             # <<<<<<<<<<<<<<
  *     __pyx_result = L9.__new__(__pyx_type)
  *     if __pyx_state is not None:
  */
     __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x9e, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 4, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x0c, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 4, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_v___pyx_PickleError);
@@ -5525,15 +7409,15 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
 
     /* "(tree fragment)":2
  * def __pyx_unpickle_L9(__pyx_type, long __pyx_checksum, __pyx_state):
- *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x0c72d22:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  */
   }
 
   /* "(tree fragment)":5
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L9.__new__(__pyx_type)             # <<<<<<<<<<<<<<
  *     if __pyx_state is not None:
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
@@ -5587,7 +7471,7 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
   __pyx_t_3 = 0;
 
   /* "(tree fragment)":6
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L9.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
@@ -5610,7 +7494,7 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":6
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x0c72d22 = (name, state))" % __pyx_checksum)
  *     __pyx_result = L9.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
@@ -5623,7 +7507,7 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
  *     return __pyx_result             # <<<<<<<<<<<<<<
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v___pyx_result);
@@ -5632,7 +7516,7 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_L9(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
 
@@ -5658,8 +7542,8 @@ static PyObject *__pyx_pf_18complex_generators_2__pyx_unpickle_L9(CYTHON_UNUSED 
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
 
 static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struct __pyx_obj_18complex_generators_L9 *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
@@ -5682,9 +7566,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
   /* "(tree fragment)":10
  *     return __pyx_result
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]             # <<<<<<<<<<<<<<
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -5692,22 +7576,30 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_name, __pyx_t_1) < 0) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 10, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   if (unlikely(__Pyx_carray_from_py_int(__pyx_t_1, __pyx_t_2, 9) < 0)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   memcpy(&(__pyx_v___pyx_result->state[0]), __pyx_t_2, sizeof(__pyx_v___pyx_result->state[0]) * (9));
 
   /* "(tree fragment)":11
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
     __PYX_ERR(1, 11, __pyx_L1_error)
   }
   __pyx_t_4 = PyTuple_GET_SIZE(__pyx_v___pyx_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 11, __pyx_L1_error)
-  __pyx_t_5 = ((__pyx_t_4 > 1) != 0);
+  __pyx_t_5 = ((__pyx_t_4 > 2) != 0);
   if (__pyx_t_5) {
   } else {
     __pyx_t_3 = __pyx_t_5;
@@ -5720,9 +7612,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
   if (__pyx_t_3) {
 
     /* "(tree fragment)":12
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[1])             # <<<<<<<<<<<<<<
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[2])             # <<<<<<<<<<<<<<
  */
     __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
@@ -5733,7 +7625,7 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(1, 12, __pyx_L1_error)
     }
-    __pyx_t_7 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_9 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -5785,9 +7677,9 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
 
     /* "(tree fragment)":11
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[1])
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[2])
  */
   }
 
@@ -5795,8 +7687,8 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L9__set_state(struc
  *         __pyx_unpickle_L9__set_state(<L9> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_L9__set_state(L9 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
 
   /* function exit code */
@@ -5909,7 +7801,7 @@ static PyObject *__pyx_pf_18complex_generators_4__pyx_unpickle_L10(CYTHON_UNUSED
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
-  __Pyx_TraceFrameInit(__pyx_codeobj__3)
+  __Pyx_TraceFrameInit(__pyx_codeobj__4)
   __Pyx_RefNannySetupContext("__pyx_unpickle_L10", 0);
   __Pyx_TraceCall("__pyx_unpickle_L10", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
@@ -6393,7 +8285,7 @@ static PyObject *__pyx_pf_18complex_generators_6__pyx_unpickle_L11(CYTHON_UNUSED
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
-  __Pyx_TraceFrameInit(__pyx_codeobj__4)
+  __Pyx_TraceFrameInit(__pyx_codeobj__5)
   __Pyx_RefNannySetupContext("__pyx_unpickle_L11", 0);
   __Pyx_TraceCall("__pyx_unpickle_L11", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
@@ -6786,15 +8678,499 @@ static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L11__set_state(stru
 }
 
 /* "(tree fragment)":1
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x9ed39e2:
+ *         from pickle import PickleError as __pyx_PickleError
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_18complex_generators_9__pyx_unpickle_L20(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_18complex_generators_9__pyx_unpickle_L20 = {"__pyx_unpickle_L20", (PyCFunction)__pyx_pw_18complex_generators_9__pyx_unpickle_L20, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_18complex_generators_9__pyx_unpickle_L20(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v___pyx_type = 0;
+  long __pyx_v___pyx_checksum;
+  PyObject *__pyx_v___pyx_state = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__pyx_unpickle_L20 (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_pyx_type,&__pyx_n_s_pyx_checksum,&__pyx_n_s_pyx_state,0};
+    PyObject* values[3] = {0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_pyx_type)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_pyx_checksum)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_L20", 1, 3, 3, 1); __PYX_ERR(1, 1, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_pyx_state)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_L20", 1, 3, 3, 2); __PYX_ERR(1, 1, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__pyx_unpickle_L20") < 0)) __PYX_ERR(1, 1, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+    }
+    __pyx_v___pyx_type = values[0];
+    __pyx_v___pyx_checksum = __Pyx_PyInt_As_long(values[1]); if (unlikely((__pyx_v___pyx_checksum == (long)-1) && PyErr_Occurred())) __PYX_ERR(1, 1, __pyx_L3_error)
+    __pyx_v___pyx_state = values[2];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__pyx_unpickle_L20", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 1, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("complex_generators.__pyx_unpickle_L20", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_18complex_generators_8__pyx_unpickle_L20(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_18complex_generators_8__pyx_unpickle_L20(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_v___pyx_PickleError = NULL;
+  PyObject *__pyx_v___pyx_result = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
+  __Pyx_TraceFrameInit(__pyx_codeobj__6)
+  __Pyx_RefNannySetupContext("__pyx_unpickle_L20", 0);
+  __Pyx_TraceCall("__pyx_unpickle_L20", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
+
+  /* "(tree fragment)":2
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):
+ *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ */
+  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x9ed39e2) != 0);
+  if (__pyx_t_1) {
+
+    /* "(tree fragment)":3
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):
+ *     if __pyx_checksum != 0x9ed39e2:
+ *         from pickle import PickleError as __pyx_PickleError             # <<<<<<<<<<<<<<
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *     __pyx_result = L20.__new__(__pyx_type)
+ */
+    __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_n_s_PickleError);
+    __Pyx_GIVEREF(__pyx_n_s_PickleError);
+    PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_PickleError);
+    __pyx_t_3 = __Pyx_Import(__pyx_n_s_pickle, __pyx_t_2, -1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 3, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_3, __pyx_n_s_PickleError); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 3, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_t_2);
+    __pyx_v___pyx_PickleError = __pyx_t_2;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "(tree fragment)":4
+ *     if __pyx_checksum != 0x9ed39e2:
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)             # <<<<<<<<<<<<<<
+ *     __pyx_result = L20.__new__(__pyx_type)
+ *     if __pyx_state is not None:
+ */
+    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 4, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x9e, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 4, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_INCREF(__pyx_v___pyx_PickleError);
+    __pyx_t_2 = __pyx_v___pyx_PickleError; __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_2, function);
+      }
+    }
+    if (!__pyx_t_5) {
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GOTREF(__pyx_t_3);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_2)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_t_4};
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      } else
+      #endif
+      {
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 4, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
+        __Pyx_GIVEREF(__pyx_t_4);
+        PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_4);
+        __pyx_t_4 = 0;
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 4, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_Raise(__pyx_t_3, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __PYX_ERR(1, 4, __pyx_L1_error)
+
+    /* "(tree fragment)":2
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):
+ *     if __pyx_checksum != 0x9ed39e2:             # <<<<<<<<<<<<<<
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ */
+  }
+
+  /* "(tree fragment)":5
+ *         from pickle import PickleError as __pyx_PickleError
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *     __pyx_result = L20.__new__(__pyx_type)             # <<<<<<<<<<<<<<
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_18complex_generators_L20), __pyx_n_s_new); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_6)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_6);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (!__pyx_t_6) {
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v___pyx_type); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+  } else {
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(__pyx_t_2)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v___pyx_type};
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GOTREF(__pyx_t_3);
+    } else
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v___pyx_type};
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GOTREF(__pyx_t_3);
+    } else
+    #endif
+    {
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 5, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_6); __pyx_t_6 = NULL;
+      __Pyx_INCREF(__pyx_v___pyx_type);
+      __Pyx_GIVEREF(__pyx_v___pyx_type);
+      PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v___pyx_type);
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v___pyx_result = __pyx_t_3;
+  __pyx_t_3 = 0;
+
+  /* "(tree fragment)":6
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *     __pyx_result = L20.__new__(__pyx_type)
+ *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ */
+  __pyx_t_1 = (__pyx_v___pyx_state != Py_None);
+  __pyx_t_7 = (__pyx_t_1 != 0);
+  if (__pyx_t_7) {
+
+    /* "(tree fragment)":7
+ *     __pyx_result = L20.__new__(__pyx_type)
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)             # <<<<<<<<<<<<<<
+ *     return __pyx_result
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):
+ */
+    if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "tuple", Py_TYPE(__pyx_v___pyx_state)->tp_name), 0))) __PYX_ERR(1, 7, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_18complex_generators___pyx_unpickle_L20__set_state(((struct __pyx_obj_18complex_generators_L20 *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "(tree fragment)":6
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x9ed39e2 = (state))" % __pyx_checksum)
+ *     __pyx_result = L20.__new__(__pyx_type)
+ *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ */
+  }
+
+  /* "(tree fragment)":8
+ *     if __pyx_state is not None:
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result             # <<<<<<<<<<<<<<
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):
+ *     __pyx_result.state = __pyx_state[0]
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v___pyx_result);
+  __pyx_r = __pyx_v___pyx_result;
+  goto __pyx_L0;
+
+  /* "(tree fragment)":1
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x9ed39e2:
+ *         from pickle import PickleError as __pyx_PickleError
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("complex_generators.__pyx_unpickle_L20", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v___pyx_PickleError);
+  __Pyx_XDECREF(__pyx_v___pyx_result);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":9
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ */
+
+static PyObject *__pyx_f_18complex_generators___pyx_unpickle_L20__set_state(struct __pyx_obj_18complex_generators_L20 *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2[20];
+  int __pyx_t_3;
+  Py_ssize_t __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  __Pyx_RefNannySetupContext("__pyx_unpickle_L20__set_state", 0);
+  __Pyx_TraceCall("__pyx_unpickle_L20__set_state", __pyx_f[1], 9, 0, __PYX_ERR(1, 9, __pyx_L1_error));
+
+  /* "(tree fragment)":10
+ *     return __pyx_result
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):
+ *     __pyx_result.state = __pyx_state[0]             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[1])
+ */
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 10, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (unlikely(__Pyx_carray_from_py_int(__pyx_t_1, __pyx_t_2, 20) < 0)) __PYX_ERR(1, 10, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  memcpy(&(__pyx_v___pyx_result->state[0]), __pyx_t_2, sizeof(__pyx_v___pyx_result->state[0]) * (20));
+
+  /* "(tree fragment)":11
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[1])
+ */
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(1, 11, __pyx_L1_error)
+  }
+  __pyx_t_4 = PyTuple_GET_SIZE(__pyx_v___pyx_state); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(1, 11, __pyx_L1_error)
+  __pyx_t_5 = ((__pyx_t_4 > 1) != 0);
+  if (__pyx_t_5) {
+  } else {
+    __pyx_t_3 = __pyx_t_5;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_5 = __Pyx_HasAttr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(__pyx_t_5 == -1)) __PYX_ERR(1, 11, __pyx_L1_error)
+  __pyx_t_6 = (__pyx_t_5 != 0);
+  __pyx_t_3 = __pyx_t_6;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_3) {
+
+    /* "(tree fragment)":12
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[1])             # <<<<<<<<<<<<<<
+ */
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_update); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 12, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (unlikely(__pyx_v___pyx_state == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(1, 12, __pyx_L1_error)
+    }
+    __pyx_t_7 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 12, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_9 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
+      __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_8);
+      if (likely(__pyx_t_9)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
+        __Pyx_INCREF(__pyx_t_9);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_8, function);
+      }
+    }
+    if (!__pyx_t_9) {
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_GOTREF(__pyx_t_1);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_8)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_7};
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_7};
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      } else
+      #endif
+      {
+        __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 12, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9); __pyx_t_9 = NULL;
+        __Pyx_GIVEREF(__pyx_t_7);
+        PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_t_7);
+        __pyx_t_7 = 0;
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "(tree fragment)":11
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[1])
+ */
+  }
+
+  /* "(tree fragment)":9
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_AddTraceback("complex_generators.__pyx_unpickle_L20__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_TraceReturn(__pyx_r, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "(tree fragment)":1
  * def __pyx_unpickle_Geffe(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     if __pyx_checksum != 0xeb210bb:
  *         from pickle import PickleError as __pyx_PickleError
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_18complex_generators_9__pyx_unpickle_Geffe(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_18complex_generators_9__pyx_unpickle_Geffe = {"__pyx_unpickle_Geffe", (PyCFunction)__pyx_pw_18complex_generators_9__pyx_unpickle_Geffe, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_18complex_generators_9__pyx_unpickle_Geffe(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_18complex_generators_11__pyx_unpickle_Geffe(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_18complex_generators_11__pyx_unpickle_Geffe = {"__pyx_unpickle_Geffe", (PyCFunction)__pyx_pw_18complex_generators_11__pyx_unpickle_Geffe, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_18complex_generators_11__pyx_unpickle_Geffe(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v___pyx_type = 0;
   long __pyx_v___pyx_checksum;
   PyObject *__pyx_v___pyx_state = 0;
@@ -6857,14 +9233,14 @@ static PyObject *__pyx_pw_18complex_generators_9__pyx_unpickle_Geffe(PyObject *_
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_18complex_generators_8__pyx_unpickle_Geffe(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_18complex_generators_10__pyx_unpickle_Geffe(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_18complex_generators_8__pyx_unpickle_Geffe(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_18complex_generators_10__pyx_unpickle_Geffe(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = NULL;
   PyObject *__pyx_v___pyx_result = NULL;
   PyObject *__pyx_r = NULL;
@@ -6877,7 +9253,7 @@ static PyObject *__pyx_pf_18complex_generators_8__pyx_unpickle_Geffe(CYTHON_UNUS
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
-  __Pyx_TraceFrameInit(__pyx_codeobj__5)
+  __Pyx_TraceFrameInit(__pyx_codeobj__7)
   __Pyx_RefNannySetupContext("__pyx_unpickle_Geffe", 0);
   __Pyx_TraceCall("__pyx_unpickle_Geffe", __pyx_f[1], 1, 0, __PYX_ERR(1, 1, __pyx_L1_error));
 
@@ -7842,6 +10218,7 @@ static int __Pyx_carray_from_py_int(PyObject *__pyx_v_o, int *__pyx_v_v, Py_ssiz
 }
 
 static PyObject *__pyx_tp_new_18complex_generators_L89(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_18complex_generators_L89 *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -7849,24 +10226,48 @@ static PyObject *__pyx_tp_new_18complex_generators_L89(PyTypeObject *t, CYTHON_U
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
+  p = ((struct __pyx_obj_18complex_generators_L89 *)o);
+  p->name = ((PyObject*)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
 static void __pyx_tp_dealloc_18complex_generators_L89(PyObject *o) {
+  struct __pyx_obj_18complex_generators_L89 *p = (struct __pyx_obj_18complex_generators_L89 *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
+  Py_CLEAR(p->name);
   (*Py_TYPE(o)->tp_free)(o);
+}
+
+static PyObject *__pyx_getprop_18complex_generators_3L89_name(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_18complex_generators_3L89_4name_1__get__(o);
+}
+
+static int __pyx_setprop_18complex_generators_3L89_name(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_18complex_generators_3L89_4name_3__set__(o, v);
+  }
+  else {
+    return __pyx_pw_18complex_generators_3L89_4name_5__del__(o);
+  }
 }
 
 static PyMethodDef __pyx_methods_18complex_generators_L89[] = {
   {"__next__", (PyCFunction)__pyx_pw_18complex_generators_3L89_3__next__, METH_NOARGS|METH_COEXIST, 0},
   {"get_state", (PyCFunction)__pyx_pw_18complex_generators_3L89_5get_state, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L89_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L89_9__setstate_cython__, METH_O, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_3L89_7get_octal_state, METH_NOARGS, 0},
+  {"name", (PyCFunction)__pyx_pw_18complex_generators_3L89_9name, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L89_11__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L89_13__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_18complex_generators_L89[] = {
+  {(char *)"name", __pyx_getprop_18complex_generators_3L89_name, __pyx_setprop_18complex_generators_3L89_name, (char *)0, 0},
+  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_18complex_generators_L89 = {
@@ -7904,7 +10305,7 @@ static PyTypeObject __pyx_type_18complex_generators_L89 = {
   __pyx_pw_18complex_generators_3L89_3__next__, /*tp_iternext*/
   __pyx_methods_18complex_generators_L89, /*tp_methods*/
   0, /*tp_members*/
-  0, /*tp_getset*/
+  __pyx_getsets_18complex_generators_L89, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -7928,6 +10329,7 @@ static PyTypeObject __pyx_type_18complex_generators_L89 = {
 };
 
 static PyObject *__pyx_tp_new_18complex_generators_L9(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_18complex_generators_L9 *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -7935,24 +10337,48 @@ static PyObject *__pyx_tp_new_18complex_generators_L9(PyTypeObject *t, CYTHON_UN
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
+  p = ((struct __pyx_obj_18complex_generators_L9 *)o);
+  p->name = ((PyObject*)Py_None); Py_INCREF(Py_None);
   return o;
 }
 
 static void __pyx_tp_dealloc_18complex_generators_L9(PyObject *o) {
+  struct __pyx_obj_18complex_generators_L9 *p = (struct __pyx_obj_18complex_generators_L9 *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
+  Py_CLEAR(p->name);
   (*Py_TYPE(o)->tp_free)(o);
+}
+
+static PyObject *__pyx_getprop_18complex_generators_2L9_name(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_18complex_generators_2L9_4name_1__get__(o);
+}
+
+static int __pyx_setprop_18complex_generators_2L9_name(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_18complex_generators_2L9_4name_3__set__(o, v);
+  }
+  else {
+    return __pyx_pw_18complex_generators_2L9_4name_5__del__(o);
+  }
 }
 
 static PyMethodDef __pyx_methods_18complex_generators_L9[] = {
   {"__next__", (PyCFunction)__pyx_pw_18complex_generators_2L9_3__next__, METH_NOARGS|METH_COEXIST, 0},
   {"get_state", (PyCFunction)__pyx_pw_18complex_generators_2L9_5get_state, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_2L9_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_2L9_9__setstate_cython__, METH_O, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_2L9_7get_octal_state, METH_NOARGS, 0},
+  {"name", (PyCFunction)__pyx_pw_18complex_generators_2L9_9name, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_2L9_11__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_2L9_13__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
+};
+
+static struct PyGetSetDef __pyx_getsets_18complex_generators_L9[] = {
+  {(char *)"name", __pyx_getprop_18complex_generators_2L9_name, __pyx_setprop_18complex_generators_2L9_name, (char *)0, 0},
+  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_18complex_generators_L9 = {
@@ -7990,7 +10416,7 @@ static PyTypeObject __pyx_type_18complex_generators_L9 = {
   __pyx_pw_18complex_generators_2L9_3__next__, /*tp_iternext*/
   __pyx_methods_18complex_generators_L9, /*tp_methods*/
   0, /*tp_members*/
-  0, /*tp_getset*/
+  __pyx_getsets_18complex_generators_L9, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -8036,8 +10462,9 @@ static void __pyx_tp_dealloc_18complex_generators_L10(PyObject *o) {
 static PyMethodDef __pyx_methods_18complex_generators_L10[] = {
   {"__next__", (PyCFunction)__pyx_pw_18complex_generators_3L10_3__next__, METH_NOARGS|METH_COEXIST, 0},
   {"get_state", (PyCFunction)__pyx_pw_18complex_generators_3L10_5get_state, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L10_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L10_9__setstate_cython__, METH_O, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_3L10_7get_octal_state, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L10_9__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L10_11__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -8122,8 +10549,9 @@ static void __pyx_tp_dealloc_18complex_generators_L11(PyObject *o) {
 static PyMethodDef __pyx_methods_18complex_generators_L11[] = {
   {"__next__", (PyCFunction)__pyx_pw_18complex_generators_3L11_3__next__, METH_NOARGS|METH_COEXIST, 0},
   {"get_state", (PyCFunction)__pyx_pw_18complex_generators_3L11_5get_state, METH_NOARGS, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L11_7__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L11_9__setstate_cython__, METH_O, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_3L11_7get_octal_state, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L11_9__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L11_11__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -8171,6 +10599,93 @@ static PyTypeObject __pyx_type_18complex_generators_L11 = {
   __pyx_pw_18complex_generators_3L11_1__init__, /*tp_init*/
   0, /*tp_alloc*/
   __pyx_tp_new_18complex_generators_L11, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+};
+
+static PyObject *__pyx_tp_new_18complex_generators_L20(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
+    o = (*t->tp_alloc)(t, 0);
+  } else {
+    o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
+  }
+  if (unlikely(!o)) return 0;
+  return o;
+}
+
+static void __pyx_tp_dealloc_18complex_generators_L20(PyObject *o) {
+  #if PY_VERSION_HEX >= 0x030400a1
+  if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
+    if (PyObject_CallFinalizerFromDealloc(o)) return;
+  }
+  #endif
+  (*Py_TYPE(o)->tp_free)(o);
+}
+
+static PyMethodDef __pyx_methods_18complex_generators_L20[] = {
+  {"__next__", (PyCFunction)__pyx_pw_18complex_generators_3L20_3__next__, METH_NOARGS|METH_COEXIST, 0},
+  {"get_state", (PyCFunction)__pyx_pw_18complex_generators_3L20_5get_state, METH_NOARGS, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_3L20_7get_octal_state, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L20_9__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_3L20_11__setstate_cython__, METH_O, 0},
+  {0, 0, 0, 0}
+};
+
+static PyTypeObject __pyx_type_18complex_generators_L20 = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "complex_generators.L20", /*tp_name*/
+  sizeof(struct __pyx_obj_18complex_generators_L20), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_18complex_generators_L20, /*tp_dealloc*/
+  0, /*tp_print*/
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
+  0, /*tp_doc*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  __pyx_pw_18complex_generators_3L20_3__next__, /*tp_iternext*/
+  __pyx_methods_18complex_generators_L20, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  __pyx_pw_18complex_generators_3L20_1__init__, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_18complex_generators_L20, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -8247,8 +10762,9 @@ static int __pyx_tp_clear_18complex_generators_Geffe(PyObject *o) {
 
 static PyMethodDef __pyx_methods_18complex_generators_Geffe[] = {
   {"__next__", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_3__next__, METH_NOARGS|METH_COEXIST, 0},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_5__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_7__setstate_cython__, METH_O, 0},
+  {"get_octal_state", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_5get_octal_state, METH_NOARGS, 0},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_7__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_18complex_generators_5Geffe_9__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -8333,6 +10849,8 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_kp_s_, __pyx_k_, sizeof(__pyx_k_), 0, 0, 1, 0},
+  {&__pyx_kp_s_Incompatible_checksums_s_vs_0x0c, __pyx_k_Incompatible_checksums_s_vs_0x0c, sizeof(__pyx_k_Incompatible_checksums_s_vs_0x0c), 0, 0, 1, 0},
   {&__pyx_kp_s_Incompatible_checksums_s_vs_0x9e, __pyx_k_Incompatible_checksums_s_vs_0x9e, sizeof(__pyx_k_Incompatible_checksums_s_vs_0x9e), 0, 0, 1, 0},
   {&__pyx_kp_s_Incompatible_checksums_s_vs_0xeb, __pyx_k_Incompatible_checksums_s_vs_0xeb, sizeof(__pyx_k_Incompatible_checksums_s_vs_0xeb), 0, 0, 1, 0},
   {&__pyx_n_s_IndexError, __pyx_k_IndexError, sizeof(__pyx_k_IndexError), 0, 0, 1, 1},
@@ -8347,6 +10865,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
+  {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
   {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
@@ -8359,6 +10878,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pyx_unpickle_Geffe, __pyx_k_pyx_unpickle_Geffe, sizeof(__pyx_k_pyx_unpickle_Geffe), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_L10, __pyx_k_pyx_unpickle_L10, sizeof(__pyx_k_pyx_unpickle_L10), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_L11, __pyx_k_pyx_unpickle_L11, sizeof(__pyx_k_pyx_unpickle_L11), 0, 0, 1, 1},
+  {&__pyx_n_s_pyx_unpickle_L20, __pyx_k_pyx_unpickle_L20, sizeof(__pyx_k_pyx_unpickle_L20), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_L89, __pyx_k_pyx_unpickle_L89, sizeof(__pyx_k_pyx_unpickle_L89), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_L9, __pyx_k_pyx_unpickle_L9, sizeof(__pyx_k_pyx_unpickle_L9), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
@@ -8377,7 +10897,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 12, __pyx_L1_error)
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(1, 81, __pyx_L1_error)
   __pyx_builtin_OverflowError = __Pyx_GetBuiltinName(__pyx_n_s_OverflowError); if (!__pyx_builtin_OverflowError) __PYX_ERR(1, 81, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 84, __pyx_L1_error)
@@ -8393,29 +10913,33 @@ static int __Pyx_InitCachedConstants(void) {
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
-  __pyx_tuple__6 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
-  __pyx_codeobj_ = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L89, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj_)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __pyx_tuple__7 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__7);
-  __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L9, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_tuple__8 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L10, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L89, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_tuple__9 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L11, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L9, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_tuple__10 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Geffe, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L10, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__11 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__11);
+  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L11, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_L20, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Geffe, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -8426,6 +10950,8 @@ static int __Pyx_InitCachedConstants(void) {
 static int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_13053218 = PyInt_FromLong(13053218L); if (unlikely(!__pyx_int_13053218)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_166541794 = PyInt_FromLong(166541794L); if (unlikely(!__pyx_int_166541794)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_246550715 = PyInt_FromLong(246550715L); if (unlikely(!__pyx_int_246550715)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
@@ -8519,30 +11045,35 @@ PyMODINIT_FUNC PyInit_complex_generators(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __pyx_type_18complex_generators_L89.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "L89", (PyObject *)&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "L89", (PyObject *)&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L89) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __pyx_ptype_18complex_generators_L89 = &__pyx_type_18complex_generators_L89;
-  if (PyType_Ready(&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __pyx_type_18complex_generators_L9.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "L9", (PyObject *)&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "L9", (PyObject *)&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L9) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __pyx_ptype_18complex_generators_L9 = &__pyx_type_18complex_generators_L9;
-  if (PyType_Ready(&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_type_18complex_generators_L10.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "L10", (PyObject *)&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "L10", (PyObject *)&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L10) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __pyx_ptype_18complex_generators_L10 = &__pyx_type_18complex_generators_L10;
-  if (PyType_Ready(&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
   __pyx_type_18complex_generators_L11.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "L11", (PyObject *)&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "L11", (PyObject *)&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L11) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
   __pyx_ptype_18complex_generators_L11 = &__pyx_type_18complex_generators_L11;
-  if (PyType_Ready(&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_18complex_generators_L20) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_type_18complex_generators_L20.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "L20", (PyObject *)&__pyx_type_18complex_generators_L20) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_L20) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_ptype_18complex_generators_L20 = &__pyx_type_18complex_generators_L20;
+  if (PyType_Ready(&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
   __pyx_type_18complex_generators_Geffe.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Geffe", (PyObject *)&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "Geffe", (PyObject *)&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_18complex_generators_Geffe) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
   __pyx_ptype_18complex_generators_Geffe = &__pyx_type_18complex_generators_Geffe;
   /*--- Type import code ---*/
   __pyx_ptype_7cpython_4type_type = __Pyx_ImportType(__Pyx_BUILTIN_MODULE_NAME, "type", 
@@ -8563,10 +11094,10 @@ PyMODINIT_FUNC PyInit_complex_generators(void)
   __Pyx_TraceCall("PyMODINIT_FUNC PyInit_complex_generators(void)", __pyx_f[0], 1, 0, __PYX_ERR(0, 1, __pyx_L1_error));
 
   /* "complex_generators.pyx":2
- * from cpython cimport bool
+ * from cpython cimport bool, str
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
- * cdef class L89:
+ * # Done
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -8575,7 +11106,7 @@ PyMODINIT_FUNC PyInit_complex_generators(void)
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_L89(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0x9ed39e2:
+ *     if __pyx_checksum != 0x0c72d22:
  *         from pickle import PickleError as __pyx_PickleError
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18complex_generators_1__pyx_unpickle_L89, NULL, __pyx_n_s_complex_generators); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
@@ -8587,8 +11118,8 @@ PyMODINIT_FUNC PyInit_complex_generators(void)
  *         __pyx_unpickle_L89__set_state(<L89> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_L89__set_state(L89 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.state = __pyx_state[0]
- *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.name = __pyx_state[0]; __pyx_result.state = __pyx_state[1]
+ *     if len(__pyx_state) > 2 and hasattr(__pyx_result, '__dict__'):
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18complex_generators_3__pyx_unpickle_L9, NULL, __pyx_n_s_complex_generators); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -8618,17 +11149,29 @@ PyMODINIT_FUNC PyInit_complex_generators(void)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "(tree fragment)":1
- * def __pyx_unpickle_Geffe(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
- *     if __pyx_checksum != 0xeb210bb:
+ * def __pyx_unpickle_L20(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0x9ed39e2:
  *         from pickle import PickleError as __pyx_PickleError
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18complex_generators_9__pyx_unpickle_Geffe, NULL, __pyx_n_s_complex_generators); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18complex_generators_9__pyx_unpickle_L20, NULL, __pyx_n_s_complex_generators); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_L20, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "(tree fragment)":9
+ *         __pyx_unpickle_L20__set_state(<L20> __pyx_result, __pyx_state)
+ *     return __pyx_result
+ * cdef __pyx_unpickle_L20__set_state(L20 __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
+ *     __pyx_result.state = __pyx_state[0]
+ *     if len(__pyx_state) > 1 and hasattr(__pyx_result, '__dict__'):
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18complex_generators_11__pyx_unpickle_Geffe, NULL, __pyx_n_s_complex_generators); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Geffe, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "complex_generators.pyx":1
- * from cpython cimport bool             # <<<<<<<<<<<<<<
+ * from cpython cimport bool, str             # <<<<<<<<<<<<<<
  * import numpy as np
  * 
  */
@@ -8935,50 +11478,42 @@ bad:
 }
 #endif
 
-/* GetAttr */
-static CYTHON_INLINE PyObject *__Pyx_GetAttr(PyObject *o, PyObject *n) {
-#if CYTHON_COMPILING_IN_CPYTHON
-#if PY_MAJOR_VERSION >= 3
-    if (likely(PyUnicode_Check(n)))
+/* IterNext */
+static CYTHON_INLINE PyObject *__Pyx_PyIter_Next2(PyObject* iterator, PyObject* defval) {
+    PyObject* next;
+    iternextfunc iternext = Py_TYPE(iterator)->tp_iternext;
+#if CYTHON_USE_TYPE_SLOTS
+    if (unlikely(!iternext)) {
 #else
-    if (likely(PyString_Check(n)))
+    if (unlikely(!iternext) || unlikely(!PyIter_Check(iterator))) {
 #endif
-        return __Pyx_PyObject_GetAttrStr(o, n);
-#endif
-    return PyObject_GetAttr(o, n);
-}
-
-/* GetAttr3 */
-static CYTHON_INLINE PyObject *__Pyx_GetAttr3(PyObject *o, PyObject *n, PyObject *d) {
-    PyObject *r = __Pyx_GetAttr(o, n);
-    if (unlikely(!r)) {
-        if (!PyErr_ExceptionMatches(PyExc_AttributeError))
-            goto bad;
-        PyErr_Clear();
-        r = d;
-        Py_INCREF(d);
+        PyErr_Format(PyExc_TypeError,
+            "%.200s object is not an iterator", Py_TYPE(iterator)->tp_name);
+        return NULL;
     }
-    return r;
-bad:
+    next = iternext(iterator);
+    if (likely(next))
+        return next;
+#if CYTHON_USE_TYPE_SLOTS
+#if PY_VERSION_HEX >= 0x02070000
+    if (unlikely(iternext == &_PyObject_NextNotImplemented))
+        return NULL;
+#endif
+#endif
+    if (defval) {
+        PyObject* exc_type = PyErr_Occurred();
+        if (exc_type) {
+            if (unlikely(exc_type != PyExc_StopIteration) &&
+                    !PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))
+                return NULL;
+            PyErr_Clear();
+        }
+        Py_INCREF(defval);
+        return defval;
+    }
+    if (!PyErr_Occurred())
+        PyErr_SetNone(PyExc_StopIteration);
     return NULL;
-}
-
-/* GetModuleGlobalName */
-static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
-    PyObject *result;
-#if !CYTHON_AVOID_BORROWED_REFS
-    result = PyDict_GetItem(__pyx_d, name);
-    if (likely(result)) {
-        Py_INCREF(result);
-    } else {
-#else
-    result = PyObject_GetItem(__pyx_d, name);
-    if (!result) {
-        PyErr_Clear();
-#endif
-        result = __Pyx_GetBuiltinName(name);
-    }
-    return result;
 }
 
 /* PyObjectCall */
@@ -9001,8 +11536,54 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 }
 #endif
 
+/* GetAttr */
+  static CYTHON_INLINE PyObject *__Pyx_GetAttr(PyObject *o, PyObject *n) {
+#if CYTHON_COMPILING_IN_CPYTHON
+#if PY_MAJOR_VERSION >= 3
+    if (likely(PyUnicode_Check(n)))
+#else
+    if (likely(PyString_Check(n)))
+#endif
+        return __Pyx_PyObject_GetAttrStr(o, n);
+#endif
+    return PyObject_GetAttr(o, n);
+}
+
+/* GetAttr3 */
+  static CYTHON_INLINE PyObject *__Pyx_GetAttr3(PyObject *o, PyObject *n, PyObject *d) {
+    PyObject *r = __Pyx_GetAttr(o, n);
+    if (unlikely(!r)) {
+        if (!PyErr_ExceptionMatches(PyExc_AttributeError))
+            goto bad;
+        PyErr_Clear();
+        r = d;
+        Py_INCREF(d);
+    }
+    return r;
+bad:
+    return NULL;
+}
+
+/* GetModuleGlobalName */
+  static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
+    PyObject *result;
+#if !CYTHON_AVOID_BORROWED_REFS
+    result = PyDict_GetItem(__pyx_d, name);
+    if (likely(result)) {
+        Py_INCREF(result);
+    } else {
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    if (!result) {
+        PyErr_Clear();
+#endif
+        result = __Pyx_GetBuiltinName(name);
+    }
+    return result;
+}
+
 /* PyIntBinop */
-  #if !CYTHON_COMPILING_IN_PYPY
+    #if !CYTHON_COMPILING_IN_PYPY
 static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, CYTHON_UNUSED int inplace) {
     #if PY_MAJOR_VERSION < 3
     if (likely(PyInt_CheckExact(op1))) {
@@ -9118,7 +11699,7 @@ static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
 #endif
 
 /* ExtTypeTest */
-  static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
+    static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
     if (unlikely(!type)) {
         PyErr_SetString(PyExc_SystemError, "Missing type object");
         return 0;
@@ -9128,44 +11709,6 @@ static PyObject* __Pyx_PyInt_SubtractObjC(PyObject *op1, PyObject *op2, CYTHON_U
     PyErr_Format(PyExc_TypeError, "Cannot convert %.200s to %.200s",
                  Py_TYPE(obj)->tp_name, type->tp_name);
     return 0;
-}
-
-/* IterNext */
-  static CYTHON_INLINE PyObject *__Pyx_PyIter_Next2(PyObject* iterator, PyObject* defval) {
-    PyObject* next;
-    iternextfunc iternext = Py_TYPE(iterator)->tp_iternext;
-#if CYTHON_USE_TYPE_SLOTS
-    if (unlikely(!iternext)) {
-#else
-    if (unlikely(!iternext) || unlikely(!PyIter_Check(iterator))) {
-#endif
-        PyErr_Format(PyExc_TypeError,
-            "%.200s object is not an iterator", Py_TYPE(iterator)->tp_name);
-        return NULL;
-    }
-    next = iternext(iterator);
-    if (likely(next))
-        return next;
-#if CYTHON_USE_TYPE_SLOTS
-#if PY_VERSION_HEX >= 0x02070000
-    if (unlikely(iternext == &_PyObject_NextNotImplemented))
-        return NULL;
-#endif
-#endif
-    if (defval) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-            if (unlikely(exc_type != PyExc_StopIteration) &&
-                    !PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))
-                return NULL;
-            PyErr_Clear();
-        }
-        Py_INCREF(defval);
-        return defval;
-    }
-    if (!PyErr_Occurred())
-        PyErr_SetNone(PyExc_StopIteration);
-    return NULL;
 }
 
 /* Import */
@@ -9789,7 +12332,7 @@ static CYTHON_INLINE int __Pyx_PyErr_ExceptionMatchesInState(PyThreadState* tsta
       static int __Pyx_setup_reduce_is_named(PyObject* meth, PyObject* name) {
   int ret;
   PyObject *name_attr;
-  name_attr = __Pyx_PyObject_GetAttrStr(meth, __pyx_n_s_name);
+  name_attr = __Pyx_PyObject_GetAttrStr(meth, __pyx_n_s_name_2);
   if (likely(name_attr)) {
       ret = PyObject_RichCompareBool(name_attr, name, Py_EQ);
   } else {
