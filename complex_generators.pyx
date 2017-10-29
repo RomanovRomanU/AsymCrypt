@@ -9,7 +9,9 @@ cdef class L89:
         if type(start_state) == list and len(start_state) == 89:
             self.state = start_state
         else:
-            self.state = [1 for i in range(89)]
+            self.state = [0 for i in range(89)]
+            self.state[14] = 1
+            self.state[88] = 1
     def __next__(self):
         cdef int new_element
         new_element = self.state[0] ^ self.state[51]

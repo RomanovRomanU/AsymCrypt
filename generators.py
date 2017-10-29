@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
-from bitarray import bitarray
+import re
 from complex_generators import L89,L9,L11,L10,Geffe,L20
 import numpy as np
 from time import time
 from random import randrange
 from gmpy2 import mpz, powmod
 
+def clear_text(string):
+	#substituting bad symbols
+	string = string.lower()
+	string = re.sub(r"\.|\"|\(|\)|\?|\'|\d|\t|\<|\>|\*|\\|\n"," ",string)
+	string = re.sub(r"[qwertyuiopasdfghjklzxcvbnm:!,-;=^]"," ",string)
+	string = re.sub(r" +"," ",string)
+	string = string.replace('ъ','ь')
+	string = string.replace('ё','е')
+	string = string.replace(' ','')
+	return string
+
 class BasicGenerator():
     def __init__(self):
         self.name = "Basic Generator"
-    def get_ocatal_state(self):
+    def get_octal_state(self):
         return randrange(0,256)
     def name(self):
         return self.name
@@ -41,7 +52,9 @@ class LemerLow(LemerGenerator):
 class LemerHigh(LemerGenerator):
     def get_octal_state(self):
         next(self)
-        bin_state = bin(self.state)[2:10]
+        bin_state = bin(self.state)[2:]
+        nulls = "0" * (32 - len(bin_state))
+        bin_state = (nulls + bin_state)[0:8]
         return int(bin_state,2)
 
 # Done
@@ -69,13 +82,14 @@ class Wolfram:
 class Librarian:
     def __init__(self):
         self.name = "Librarian"
-        book = open('Повесть','r')
-        self.sequence = bytes(book,'utf')
+        book = open('Voyna_i_mir.txt','r')
+        self.sequence = bytes(clear_text(book.read()),'utf-8')
         self.index = 0
     def __next__(self):
-        self.i += 1
-    def get_state(self):
-        return self.sequence[i]
+        self.index += 1
+    def get_octal_state(self):
+        next(self)
+        return self.sequence[self.index]
     def name(self):
         return self.name
 
@@ -104,6 +118,14 @@ class BM:
     def name(self):
         return self.name
 
+class BM_bit(BM):
+    def get_octal_state(self):
+        result = ''
+        for i in range(8):
+            next(self)
+            result += str(self.get_state())
+        return int(result, 2)
+
 class BBS:
     def __init__(self, r0):
         self.name = "BBS"
@@ -127,20 +149,13 @@ class BBS:
     def name(self):
         return self.name
 
-
-# For LemmerLow and LemmerHigh
-m = 1<<32
-a = (1<<16) + 1
-c = 119
-
-x = L11()
-y = L9()
-s = L10()
-g = Geffe(x,y,s)
-
-#start = time()
-#test = L9([1,0,1,1,0,0,0,1,0])
-
+class BBS_bit(BBS):
+    def get_octal_state(self):
+        result = ''
+        for i in range(8):
+            next(self)
+            result += str(self.get_state())
+        return int(result, 2)
 
 # Генератор должен возвращать байты
 # z = Z(1-альфа)
@@ -156,7 +171,7 @@ def equability_check(generator,iterations,z):
     criteria = 0
     n = iterations / 256
     for i in range(256):
-        criteria += (values_frequency[i] - n)**2 / n
+        criteria += (values_frequency.get(i,0) - n)**2 / n
     # Хи**2  (1-альфа)
     l = 255
     limit_criteria = ((2*l)**(1/2)) * z + l
@@ -168,8 +183,6 @@ def equability_check(generator,iterations,z):
 def independence_check(generator,iterations,z):
     values_frequency = [[0 for i in range(256)] for i in range(256)]
     for _ in range(0,iterations,2):
-        if _ % 10000 == 0:
-            print(_)
         first_value = generator.get_octal_state()
         second_value = generator.get_octal_state()
         values_frequency[first_value][second_value] += 1
@@ -180,10 +193,12 @@ def independence_check(generator,iterations,z):
     for i in range(256):
         for j in range(256):
             pair_amount = values_frequency[i][j]
+            if pair_amount == 0:
+                continue
             n += pair_amount
             first_value_amount = sum([values_frequency[i][k] for k in range(256)])
             second_value_amount = sum([values_frequency[k][j] for k in range(256)])
-
+            # Избегаем деления на ноль
             criteria += (pair_amount ** 2)/(first_value_amount * second_value_amount)
     criteria = n* (criteria - 1)
     l = 255 ** 2
@@ -203,11 +218,12 @@ def uniformity_check(generator,iterations,z,r = 20):
         for _ in range(cut_length):
             value = generator.get_octal_state()
             values_frequency[j][value] += 1
-
     criteria = 0
     for i in range(256):
         for j in range(r):
             byte_on_cut_amount = values_frequency[j][i]
+            if byte_on_cut_amount == 0:
+                continue
             byte_amount = sum([values_frequency[k][i] for k in range(r)])
             # У нас длинна отрезков везде одинаковая, поэтому её не считаем
 
@@ -230,4 +246,46 @@ Z = {
     0.1: 1.28
 }
 
-uniformity_check(g,1000000,Z[0.05],20)
+
+# --------------------------------------------------------------
+# For LemmerLow and LemmerHigh
+m = 1<<32
+a = (1<<16) + 1
+c = 119
+if __name__ == "__main__":
+    #basic = BasicGenerator()
+    #l20 = L20()
+    #lemer_low = LemerLow(a,c,m,123)
+    #lemer_high = LemerHigh(a,c,m,123)
+    #x = L11()
+    #y = L9()
+    #s = L10()
+    #geffe = Geffe(x,y,s)
+    #wolfram = Wolfram(65)
+    #librarian = Librarian()
+    #bm = BM(0x7877)
+    #bm_bit = BM_bit(0x56AA)
+    #bbs = BBS(0xAAAA)
+    #bbs_bit = BBS_bit(0xFF123)
+    #Вот тут еще должно быть bm_bit, bbs_bit
+
+    #uniformity_check(librarian,1000000,Z[0.01])
+    #generators = [basic,l20,l89,lemer_low,lemer_high,geffe,wolfram,librarian,bm,bbs,bm_bit,bbs_bit]
+    #for generator in generators:
+    #    z = Z[0.1]
+    #    uniformity_check(generator,1000000,z)
+    #    print('----------------------------------')
+
+    #l89 = L89()
+    #equability_check(l89,1000000,Z[0.01])
+    #uniformity_check(l89,1000000,Z[0.01])
+
+    #equability_check(wolfram,1000000,Z[0.01])
+    #wolfram = Wolfram(0xAAAA)
+    #independence_check(wolfram,1000000,Z[0.01])
+    #uniformity_check(wolfram,1000000,Z[0.01])
+
+    librarian = Librarian()
+    #equability_check(librarian,1000000,Z[0.01])
+    #independence_check(librarian,100000,Z[0.01])
+    uniformity_check(librarian,1000000,Z[0.01],r=20)
